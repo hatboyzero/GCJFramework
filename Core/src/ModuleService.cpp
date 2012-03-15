@@ -30,6 +30,7 @@
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/thread/locks.hpp>
 
 #include <iostream>
@@ -76,7 +77,8 @@ ModuleService::load(const std::string& _moduleName)
     if(!pModuleManager->findPath(_moduleName, modulePath))
     {
         std::stringstream stream;
-        stream << "DEBUG: Module " << _moduleName << " not found in defined module search paths." << std::endl;
+        stream << "Module " << _moduleName << " not found in defined module search paths." << std::endl;
+        BOOST_LOG_TRIVIAL(error) << stream.str();
 
         throw std::exception(stream.str().c_str());
     }
@@ -86,14 +88,14 @@ ModuleService::load(const std::string& _moduleName)
 #ifdef _WIN32
     I_ModuleInfo::ModuleHandle_type hModule = LoadLibraryA(modulePath.string().c_str());
 #else
-    std::cout << "DEBUG: dlopen " << modulePath.string().c_str() << std::endl;
+    BOOST_LOG_TRIVIAL(info) << "dlopen " << modulePath.string().c_str() << std::endl;
     I_ModuleInfo::ModuleHandle_type hModule = dlopen(modulePath.string().c_str(), RTLD_NOW | RTLD_GLOBAL);
 #endif // _WIN32
 
     if (hModule == NULL)
     {
         std::stringstream stream;
-        stream << "DEBUG: Error loading module " << modulePath.string()
+        stream << "Error loading module " << modulePath.string()
 #ifndef _WIN32
         << dlerror()
 #else
@@ -101,6 +103,7 @@ ModuleService::load(const std::string& _moduleName)
 #endif
             << std::endl;
 
+        BOOST_LOG_TRIVIAL(error) << stream.str();
         throw std::exception(stream.str().c_str());
     }
 
@@ -140,7 +143,7 @@ ModuleService::load(const std::string& _moduleName)
     }
     else
     {
-        std::cout << "DEBUG: Error getting procedure address in module " << modulePath.string() << std::endl;
+        BOOST_LOG_TRIVIAL(error) << "Error getting procedure address in module " << modulePath.string() << std::endl;
 
         // Not found, so return NULL
         return NULL;

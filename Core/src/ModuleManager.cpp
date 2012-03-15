@@ -26,6 +26,7 @@
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/log/trivial.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -84,7 +85,8 @@ ModuleManager::dropPath(const boost::filesystem::path& _modulePath)
     else
     {
         std::stringstream stream;
-        stream << "DEBUG: Path " << _modulePath << " is not in the list of module search paths." << std::endl;
+        stream << "Path " << _modulePath << " is not in the list of module search paths." << std::endl;
+        BOOST_LOG_TRIVIAL(error) << stream.str();
 
         throw std::exception(stream.str().c_str());
     }
@@ -125,7 +127,7 @@ ModuleManager::findPath(const std::string _moduleName, boost::filesystem::path &
         // Check if the path is valid
         modulePathFound = boost::filesystem::exists(modulePath);
 
-        std::cout << "DEBUG: attempting " << modulePath.string() << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "Attempting " << modulePath.string() << std::endl;
 
         // Iterate path iterator
         iter++;

@@ -22,6 +22,8 @@ REM ***Dependency information***
 REM *** Boost ***
 set BOOST_VERSION=1.49.0
 for /f "tokens=1,2,3 delims=. " %%a in ("%BOOST_VERSION%") do set BOOST_MAJOR_VERSION=%%a&set BOOST_MINOR_VERSION=%%b&set BOOST_PATCH_VERSION=%%c
+set BOOST_LOG_VERSION=1.0
+for /f "tokens=1,2 delims=. " %%a in ("%BOOST_LOG_VERSION%") do set BOOST_LOG_MAJOR_VERSION=%%a&set BOOST_LOG_MINOR_VERSION=%%b
 set BOOST_SRC=%DEV_DIR%\boost-build
 set BOOST_INSTALL=%INSTALLS_DIR%\Boost
 set BOOST_INCLUDE=%BOOST_INSTALL%\include\boost-%BOOST_MAJOR_VERSION%_%BOOST_MINOR_VERSION%
@@ -30,7 +32,7 @@ set BOOST_BIN=%BOOST_INSTALL%\lib
 set BOOST_THREADING=multi
 set BOOST_LINK=shared
 set BOOST_RUNTIME=shared
-set BOOST_PACKAGES=--with-system --with-serialization --with-filesystem --with-program_options --with-thread --with-date_time --with-regex
+set BOOST_PACKAGES=--with-system --with-serialization --with-filesystem --with-program_options --with-thread --with-date_time --with-regex --with-log
 
 REM *** LibXML2 ***
 set LIBXML2_VERSION=2.7.8
@@ -50,8 +52,7 @@ set PROJECT_INSTALL=%INSTALLS_DIR%\%PROJECT_NAME%
 set PROJECT_INCLUDE=%PROJECT_INSTALL%\include
 set PROJECT_LIB=%PROJECT_INSTALL%\lib
 set PROJECT_BIN=%PROJECT_INSTALL%\bin
-set PROJECT_OPTS=-D LIBXML2_INCLUDE_DIR:PATH=%LIBXML2_INCLUDE% -D LIBXML2_LIBRARIES:PATH=%LIBXML2_LIB%\libxml2.lib
-set PROJECT_OPTS=%PROJECT_OPTS% -D BOOST_ROOT=%BOOST_INSTALL% -D BOOST_INCLUDEDIR=%BOOST_INCLUDE%
+set PROJECT_OPTS=-D BOOST_ROOT=%BOOST_INSTALL% -D BOOST_INCLUDEDIR=%BOOST_INCLUDE%
 
 if [%PATHSET%]==[] set PATH=%PATH%;%PROJECT_SRC%\GnuWin\bin
 if [%PATHSET%]==[] set PATHSET=TRUE

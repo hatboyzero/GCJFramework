@@ -10,7 +10,6 @@ endif (NOT GCJ_PARENT)
 set (CMAKE_MODULE_PATH "${GCJ_PARENT}/GCJFramework/CMake/Modules" ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
 
-Find_Package(LibXml2 REQUIRED)
 Find_Package(Boost REQUIRED serialization system filesystem)
 
 SET (LIB_TYPE SHARED)
@@ -37,15 +36,15 @@ set (GCJCore_SRC
 	src/ModuleService.hpp
 )
 
-set (GCJCore_DEFINITIONS ${GCJ_DEFINITIONS} -DGCJCORE_EXPORTS ${LIBXML2_DEFINITIONS})
+set (GCJCore_DEFINITIONS ${GCJ_DEFINITIONS} -DGCJCORE_EXPORTS)
 add_definitions (${GCJCore_DEFINITIONS})
 
-include_directories (${Boost_INCLUDE_DIR} ${LIBXML2_INCLUDE_DIR})
+include_directories (${Boost_INCLUDE_DIR})
 
-link_directories (${Boost_LIBRARY_DIRS} ${LibXML2_LIBRARY_DIRS})
+link_directories (${Boost_LIBRARY_DIRS})
 
 add_library (GCJCore ${LIB_TYPE} ${GCJCore_SRC})
 
-target_link_libraries (GCJCore ${Boost_LIBRARIES} ${LIBXML2_LIBRARIES})
+target_link_libraries (GCJCore ${Boost_LIBRARIES})
 
 set_target_properties (GCJCore PROPERTIES DEBUG_POSTFIX "_d")

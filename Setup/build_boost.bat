@@ -2,11 +2,12 @@
 
 call project_vars.bat
 
-
 set BOOST_VENDOR_DROP=http://svn.boost.org/svn/boost/tags/release/Boost_%BOOST_MAJOR_VERSION%_%BOOST_MINOR_VERSION%_%BOOST_PATCH_VERSION%
 
 if not exist %BOOST_SRC% svn co %BOOST_VENDOR_DROP% %BOOST_SRC%
 if exist %BOOST_SRC% svn up %BOOST_SRC%
+
+call build_boost-log.bat
 
 cd %BOOST_SRC%
 call bootstrap.bat
