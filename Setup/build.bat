@@ -1,0 +1,2 @@
+call build_dependencies.bat
+call build_project.bat
