@@ -1,0 +1,39 @@
+Google Code Jam Solution Framework, v0.1.0
+Copyright 2012 Matthew Alan Gray -- All Rights Reserved.
+
+Framework for download, generation, and submission of solutions for
+the Google Code Jam
+-------------------------------------------------------------------------------
+TABLE OF CONTENTS:
+
+0. Disclaimer
+1. Prerequisites
+2. Basic usage
+  a. Configuration
+  b. Generating Solution Stubs
+  c. Executing a Solution
+3. Configuration files
+-------------------------------------------------------------------------------
+0. DISCLAIMER
+
+Google Code Jam Solution Framework, v0.1.0
+Copyright 2012 Matthew Alan Gray -- All Rights Reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-------------------------------------------------------------------------------
+1. PREREQUISITES
+-------------------------------------------------------------------------------
+2. BASIC USAGE
+-------------------------------------------------------------------------------
+3. CONFIGURATION FILES
