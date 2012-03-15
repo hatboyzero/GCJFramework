@@ -33,11 +33,11 @@ target_link_libraries (GCJExecutor ${GCJExecutor_LIBRARIES})
 set_target_properties (GCJExecutor PROPERTIES DEBUG_POSTFIX "_d")
 
 if (MSVC)
-configure_file (
-    ${GCJ_PARENT}/GCJFramework/Executor/GCJExecutor.vcxproj.user.in
-    ${CMAKE_BINARY_DIR}/Executor/GCJExecutor.vcxproj.user
-    @ONLY
-)
+#configure_file (
+#    ${GCJ_PARENT}/GCJFramework/Executor/GCJExecutor.vcxproj.user.in
+#    ${CMAKE_BINARY_DIR}/Executor/GCJExecutor.vcxproj.user
+#    @ONLY
+#)
 endif (MSVC)
 
 configure_file (
