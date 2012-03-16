@@ -1,5 +1,5 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-// Google Code Jam Solution Framework
+// Google Code Jam -- Contest 433101 - Solution A
 //
 // Copyright (C) 2012 Matthew Alan Gray
 //
@@ -22,8 +22,9 @@
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 /// @author  John S. Givler, Ph.D.(Computer Science)
-#ifndef GCJFRAMEWORK_CORE_CONFIGURATION_HPP_INCLUDED
-#define GCJFRAMEWORK_CORE_CONFIGURATION_HPP_INCLUDED
+
+#ifndef GCJFRAMEWORK_SOLUTION_CONFIGURATION_HPP_INCLUDED
+#define GCJFRAMEWORK_SOLUTION_CONFIGURATION_HPP_INCLUDED
 
 #ifdef  _MSC_VER
 #    pragma once
@@ -46,53 +47,59 @@
 #    endif
 #endif  // _MSC_VER
 
+
 // Microsoft C++ compiler
 #if defined(_MSC_VER) && !defined(__INTEL_COMPILER)
-#    ifdef  GCJCORE_EXPORTS
-#        define GCJCORE_DLL_LINK __declspec(dllexport)
+#    ifdef  SOLUTION_EXPORTS
+#        define SOLUTION_DLL_LINK __declspec(dllexport)
 #    else
-#        define GCJCORE_DLL_LINK __declspec(dllimport)
+#        define SOLUTION_DLL_LINK __declspec(dllimport)
 #    endif
 #endif  // _MSC_VER
+
 
 // GNU C++ compiler
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #    if 0 // (__GNUC__ >= 4) && !defined(HOST_CYGWIN) && !defined(HOST_SOLARIS)
-#        ifdef  GCJCORE_EXPORTS
-#            define GCJCORE_DLL_LINK __attribute__ ((visibility ("default")))
+#        ifdef  SOLUTION_EXPORTS
+#            define SOLUTION_DLL_LINK __attribute__ ((visibility ("default")))
 #        else
-#            define GCJCORE_DLL_LINK __attribute__ ((visibility ("hidden")))
+#            define SOLUTION_DLL_LINK __attribute__ ((visibility ("hidden")))
 #        endif
 #    else
-#        ifdef  GCJCORE_EXPORTS
-#            define GCJCORE_DLL_LINK // __declspec(dllexport)
+#        ifdef  SOLUTION_EXPORTS
+#            define SOLUTION_DLL_LINK // __declspec(dllexport)
 #        else
-#            define GCJCORE_DLL_LINK // __declspec(dllimport)
+#            define SOLUTION_DLL_LINK // __declspec(dllimport)
 #        endif
 #    endif
 #endif  // __GNUG__
 
+
 // Sun C++ compiler
 #if defined(__SUNPRO_CC)
-#    ifdef  GCJCORE_EXPORTS
-#        define GCJCORE_DLL_LINK   // ?
+#    ifdef  SOLUTION_EXPORTS
+#        define SOLUTION_DLL_LINK   // ?
 #    else
-#        define GCJCORE_DLL_LINK   // ?
+#        define SOLUTION_DLL_LINK   // ?
 #    endif
 #endif  // __SUNPRO_CC
 
+
 // Intel C++ compiler
 #if defined(__INTEL_COMPILER)
-#    ifdef  GCJCORE_EXPORTS
-#        define GCJCORE_DLL_LINK __declspec(dllexport)
+#    ifdef  SOLUTION_EXPORTS
+#        define SOLUTION_DLL_LINK __declspec(dllexport)
 #    else
-#        define GCJCORE_DLL_LINK __declspec(dllimport)
+#        define SOLUTION_DLL_LINK __declspec(dllimport)
 #    endif
 #endif  // __INTEL_COMPILER
 
-#ifndef GCJCORE_DLL_LINK
-#    define GCJCORE_DLL_LINK
-#endif  // ! ZENGCJCORE_EXPORTS
 
-#endif  // GCJFRAMEWORK_CORE_CONFIGURATION_HPP_INCLUDED
+#ifndef SOLUTION_DLL_LINK
+#    define SOLUTION_DLL_LINK
+#endif  // ! SOLUTION_DLL_LINK
+
+
+#endif  // GCJFRAMEWORK_SOLUTION_CONFIGURATION_HPP_INCLUDED
 

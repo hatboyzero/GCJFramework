@@ -44,14 +44,13 @@ namespace GCJFramework {
 class I_Solution;
 
 /// Base class for a loadable problem module
-/// A problem DLL should implement one of these
+/// A solution DLL should implement one of these
 class GCJCORE_DLL_LINK I_Module
 :   public boost::noncopyable
 {
     /// @name Types
     /// @{
 public:
-    typedef std::list<std::string>          SolutionNameCollection_type;
     typedef boost::shared_ptr<I_Solution>    pSolution_type;
 
 #ifdef HOST_WIN32
@@ -66,20 +65,12 @@ public:
     /// @name I_Module interface
     /// @{
 public:
-    /// Returns the names of the problems implemented by this module.
-    virtual SolutionNameCollection_type& getSolutionNames() = 0;
-
-    /// Returns a problem by name.
+    /// Returns a solution.
     /// For now, Solutions are all considered singletons. The problem should
-    /// normally not be created until getSolution is called, in case the problem
+    /// normally not be created until getSolution is called, in case the solution
     /// isn't required.
-    /// @return The problem instance if the name is a valid problem name for this
-    ///         module, otherwise an invalid boost::shared_ptr<> is returned.
-    virtual pSolution_type getSolution(const std::string& _name) = 0;
-
-    /// Destroys the problem.
-    /// The framework will call this when it is finished with the problem.
-    virtual void destroySolution(pSolution_type _pSolution) = 0;
+    /// @return The solution instance.
+    virtual pSolution_type getSolution() = 0;
     /// @}
 
     /// @name 'Structors

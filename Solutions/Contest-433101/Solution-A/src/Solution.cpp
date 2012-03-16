@@ -1,5 +1,5 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-// Google Code Jam Solution Framework
+// Google Code Jam -- Contest 433101 - Solution A
 //
 // Copyright (C) 2012 Matthew Alan Gray
 //
@@ -21,18 +21,56 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "../I_SolutionStrategy.hpp"
+#include "Solution.hpp"
+
+#include <boost/cstdint.hpp>
+
+#include <sstream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_SolutionStrategy::I_SolutionStrategy()
+Solution::Solution()
 {
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_SolutionStrategy::~I_SolutionStrategy()
+Solution::~Solution()
 {
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+bool
+Solution::validate(std::istream& _inputStream, std::istream& _validationStream)
+{
+    std::stringstream outputStream;
+
+    execute(_inputStream, outputStream);
+
+    std::stringstream validationStream;
+    validationStream << _validationStream;
+
+    return outputStream.str().compare(validationStream.str()) == 0;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+bool
+Solution::execute(std::istream& _inputStream, std::ostream& _outputStream)
+{
+    boost::uint32_t testCases;
+
+    _inputStream >> testCases;
+
+    for (boost::uint32_t i = 0; i < testCases; ++i)
+    {
+        boost::uint8_t snappers;
+        boost::uint32_t snaps;
+        _inputStream >> snappers >> snaps;
+        bool state = snaps & ((1 << snappers) - 1);
+        _outputStream << "Case #" << i+1 << ": " << state ? "ON" : "OFF";
+    }
+
+    return true;
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

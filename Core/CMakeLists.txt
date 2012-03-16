@@ -21,13 +21,11 @@ set (GCJCore_SRC
 	I_ModuleManager.hpp
 	I_ModuleService.hpp
 	I_Solution.hpp
-	I_SolutionStrategy.hpp
 	src/I_Module.cpp
 	src/I_ModuleInfo.cpp
 	src/I_ModuleManager.cpp
 	src/I_ModuleService.cpp
 	src/I_Solution.cpp
-	src/I_SolutionStrategy.cpp
 	src/ModuleInfo.cpp
 	src/ModuleInfo.hpp
 	src/ModuleManager.cpp
@@ -36,7 +34,7 @@ set (GCJCore_SRC
 	src/ModuleService.hpp
 )
 
-set (GCJCore_DEFINITIONS ${GCJ_DEFINITIONS} -DGCJCORE_EXPORTS)
+set (GCJCore_DEFINITIONS -DGCJCORE_EXPORTS ${GCJ_DEFINITIONS})
 add_definitions (${GCJCore_DEFINITIONS})
 
 include_directories (${Boost_INCLUDE_DIR})
@@ -48,3 +46,10 @@ add_library (GCJCore ${LIB_TYPE} ${GCJCore_SRC})
 target_link_libraries (GCJCore ${Boost_LIBRARIES})
 
 set_target_properties (GCJCore PROPERTIES DEBUG_POSTFIX "_d")
+
+install ( TARGETS
+	GCJCore
+	RUNTIME DESTINATION ${GCJ_PARENT}/installs/GCJFramework/bin
+	LIBRARY DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib
+	ARCHIVE DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib
+)

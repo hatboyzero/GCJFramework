@@ -1,5 +1,5 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-// Google Code Jam Solution Framework
+// Google Code Jam -- Contest 433101 - Solution A
 //
 // Copyright (C) 2012 Matthew Alan Gray
 //
@@ -21,45 +21,19 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_I_SOLUTION_HPP_INCLUDED
-#define GCJFRAMEWORK_I_SOLUTION_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_MODULE_HPP_INCLUDED
+#define GCJFRAMEWORK_MODULE_HPP_INCLUDED
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
-
-#include <iostream>
+#include <GCJFramework/Core/I_Module.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace GCJFramework {
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-class GCJCORE_DLL_LINK I_Solution
-:   public boost::noncopyable
+extern "C"
 {
-    /// @name Types
-    /// @{
-public:
-    /// @}
-
-    /// @name I_Solution interface
-    /// @{ 
-public:
-    virtual bool validate(std::istream& _inputStream, std::istream& _validationStream) = 0;
-    virtual bool execute(std::istream& _inputStream, std::ostream& _outputStream) = 0;
-    /// @}
-
-    /// @{ 'Structors
-protected:
-             I_Solution();
-    virtual ~I_Solution();
-    /// @}
-
-};  // interface I_Solution
+    SOLUTION_DLL_LINK GCJFramework::I_Module& getModule();
+}
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace GCJFramework
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORK_I_SOLUTION_HPP_INCLUDED
-
+#endif // GCJFRAMEWORK_MODULE_HPP_INCLUDED

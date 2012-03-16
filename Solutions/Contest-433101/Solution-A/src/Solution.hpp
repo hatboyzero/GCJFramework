@@ -1,5 +1,5 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-// Google Code Jam Solution Framework
+// Google Code Jam -- Contest 433101 - Solution A
 //
 // Copyright (C) 2012 Matthew Alan Gray
 //
@@ -21,41 +21,51 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_I_SOLUTION_STRATEGY_HPP_INCLUDED
-#define GCJFRAMEWORK_I_SOLUTION_STRATEGY_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_SOLUTION_HPP_INCLUDED
+#define GCJFRAMEWORK_SOLUTION_HPP_INCLUDED
 
-#include "Configuration.hpp"
-
-#include <boost/noncopyable.hpp>
+#include <GCJFramework/Core/I_Solution.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class GCJCORE_DLL_LINK I_SolutionStrategy
-:   public boost::noncopyable
+class Solution
+:   public I_Solution
 {
     /// @name Types
     /// @{
 public:
     /// @}
 
-    /// @name I_SolutionStrategy interface
-    /// @{ 
+    /// @name I_Solution implementation
+    /// @{
+public:
+    virtual bool validate(std::istream& _inputStream, std::istream& _validationStream);
+    virtual bool execute(std::istream& _inputStream, std::ostream& _outputStream);
+    /// @}
+
+    /// @name Solution implementation
+    /// @{
 public:
     /// @}
 
-    /// @{ 'Structors
-protected:
-             I_SolutionStrategy();
-    virtual ~I_SolutionStrategy();
+    /// @name 'Structors
+    /// @{
+public:
+             Solution();
+    virtual ~Solution();
     /// @}
 
-};  // interface I_SolutionStrategy
+    /// @name Member Variables
+    /// @{
+private:
+    /// @}
+
+};  // class Solution
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORK_I_SOLUTION_STRATEGY_HPP_INCLUDED
-
+#endif // GCJFRAMEWORK_SOLUTION_HPP_INCLUDED
