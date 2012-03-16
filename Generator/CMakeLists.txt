@@ -10,7 +10,10 @@ endif (NOT GCJ_PARENT)
 set (CMAKE_MODULE_PATH "${GCJ_PARENT}/GCJFramework/CMake/Modules" ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
 
-Find_Package(Boost REQUIRED serialization system filesystem)
+Find_Package (Boost REQUIRED serialization system filesystem)
+Find_Package (ZLIB REQUIRED)
+Find_Package (CURL REQUIRED)
+Find_Package (RapidJSON REQUIRED)
 
 set (GCJGenerator_SRC
     src/main.cpp
@@ -19,7 +22,7 @@ set (GCJGenerator_SRC
 set (GCJGenerator_DEFINITIONS ${GCJ_DEFINITIONS})
 add_definitions(${GCJGenerator_DEFINITIONS})
 
-include_directories (${Boost_INCLUDE_DIR} ${GCJ_PARENT})
+include_directories (${Boost_INCLUDE_DIR} ${GCJ_PARENT} ${ZLIB_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS})
 
 link_directories (${Boost_LIBRARY_DIRS})
 
@@ -27,7 +30,7 @@ add_executable (GCJGenerator ${GCJGenerator_SRC})
 
 add_dependencies (GCJGenerator GCJCore)
 
-set (GCJGenerator_LIBRARIES GCJCore ${Boost_LIBRARIES})
+set (GCJGenerator_LIBRARIES GCJCore ${Boost_LIBRARIES} ${ZLIB_LIBRARIES} ${CURL_LIBRARIES})
 target_link_libraries (GCJGenerator ${GCJGenerator_LIBRARIES})
 
 set_target_properties (GCJGenerator PROPERTIES DEBUG_POSTFIX "_d")
