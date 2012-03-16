@@ -45,7 +45,7 @@ set_target_properties (Solution-433101-A PROPERTIES DEBUG_POSTFIX "_d")
 
 install ( TARGETS
 	Solution-433101-A
-	RUNTIME DESTINATION ${GCJ_PARENT}/installs/GCJFramework/bin
-	LIBRARY DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib
-	ARCHIVE DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib
+	RUNTIME DESTINATION ${GCJ_PARENT}/installs/GCJFramework/bin/solutions
+	LIBRARY DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib/solutions
+	ARCHIVE DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib/solutions
 )

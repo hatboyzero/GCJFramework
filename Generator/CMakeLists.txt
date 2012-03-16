@@ -49,10 +49,9 @@ configure_file (
     @ONLY
 )
 
-install (TARGETS
-    GCJGenerator
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+install ( TARGETS
+	GCJGenerator
+	RUNTIME DESTINATION ${GCJ_PARENT}/installs/GCJFramework/bin
+	LIBRARY DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib
+	ARCHIVE DESTINATION ${GCJ_PARENT}/installs/GCJFramework/lib
 )
-
