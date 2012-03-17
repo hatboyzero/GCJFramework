@@ -36,16 +36,16 @@ target_link_libraries (GCJGenerator ${GCJGenerator_LIBRARIES})
 set_target_properties (GCJGenerator PROPERTIES DEBUG_POSTFIX "_d")
 
 if (MSVC)
-#configure_file (
-#    ${GCJ_PARENT}/GCJFramework/Generator/GCJGenerator.vcxproj.user.in
-#    ${CMAKE_BINARY_DIR}/Generator/GCJGenerator.vcxproj.user
-#    @ONLY
-#)
+configure_file (
+    ${GCJ_PARENT}/GCJFramework/Generator/GCJGenerator.vcxproj.user.in
+    ${CMAKE_BINARY_DIR}/Generator/GCJGenerator.vcxproj.user
+    @ONLY
+)
 endif (MSVC)
 
 configure_file (
-    ${GCJ_PARENT}/GCJFramework/Generator/config.xml.in
-    ${GCJ_PARENT}/GCJFramework/Generator/config.xml
+    ${GCJ_PARENT}/GCJFramework/Generator/config.json.in
+    ${CMAKE_BINARY_DIR}/Generator/config.json
     @ONLY
 )
 
