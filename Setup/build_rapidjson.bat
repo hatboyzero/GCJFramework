@@ -18,7 +18,7 @@ svn up
 if not exist %INSTALLS_DIR% mkdir %INSTALLS_DIR%
 if not exist %RAPIDJSON_INSTALL% mkdir %RAPIDJSON_INSTALL%
 
-xcopy %RAPIDJSON_SRC%\include\rapidjson %RAPIDJSON_INCLUDE% /E /C /I /Q /R /Y
+xcopy %RAPIDJSON_SRC%\include\rapidjson %RAPIDJSON_INCLUDE%\rapidjson /E /C /I /Q /R /Y
 
 cd %WORKING_DIR%
 

@@ -21,6 +21,7 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+#include "SolutionExecutive.hpp"
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
@@ -98,6 +99,14 @@ main(int _argc, const char* _argv[])
         stream << std::endl << description << std::endl;
         std::cout << stream.str();
     }
+
+    boost::filesystem::path path = boost::filesystem::system_complete(
+        boost::filesystem::path(configPath)
+    ).normalize();
+
+    GCJFramework::SolutionExecutive executive(path);
+
+    executive.run();
 
     return 0;
 }
