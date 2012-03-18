@@ -1,3 +1,10 @@
+set WGET="%PROGRAMFILES(X86)%\GnuWin32\bin\wget.exe"
+set TAR="%PROGRAMFILES(X86)%\GnuWin32\bin\bsdtar.exe"
+
+if not exist %WGET% echo Please install wget via http://downloads.sourceforge.net/gnuwin32/wget-1.11.4-1-setup.exe
+
+if not exist %TAR% echo Please install tar via http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-setup.exe
+
 REM ***Project Information***
 
 set PROJECT=GCJFramework
@@ -40,6 +47,14 @@ set ZLIB_INSTALL=%INSTALLS_DIR%\zlib
 set ZLIB_INCLUDE=%ZLIB_INSTALL%\include
 set ZLIB_LIB=%ZLIB_INSTALL%\lib
 set ZLIB_BIN=%ZLIB_INSTALL%\bin
+
+REM *** OpenSSL ***
+set OPENSSL_VERSION=1.0.0
+set OPENSSL_SRC=%DEV_DIR%\openssl
+set OPENSSL_INSTALL=%INSTALLS_DIR%\openssl
+set OPENSSL_INCLUDE=%OPENSSL_INSTALL%\include
+set OPENSSL_LIB=%OPENSSL_INSTALL%\lib
+set OPENSSL_BIN=%OPENSSL_INSTALL%\bin
 
 REM *** libcURL ***
 set LIBCURL_SRC=%DEV_DIR%\libcurl
