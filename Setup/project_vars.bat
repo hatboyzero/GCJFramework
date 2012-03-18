@@ -43,7 +43,7 @@ set BOOST_PACKAGES=--with-system --with-serialization --with-filesystem --with-p
 
 REM *** zlib ***
 set ZLIB_SRC=%DEV_DIR%\zlib
-set ZLIB_INSTALL=%INSTALLS_DIR%\zlib
+set ZLIB_INSTALL=%INSTALLS_DIR%\libcurl_deps
 set ZLIB_INCLUDE=%ZLIB_INSTALL%\include
 set ZLIB_LIB=%ZLIB_INSTALL%\lib
 set ZLIB_BIN=%ZLIB_INSTALL%\bin
@@ -51,7 +51,7 @@ set ZLIB_BIN=%ZLIB_INSTALL%\bin
 REM *** OpenSSL ***
 set OPENSSL_VERSION=1.0.0
 set OPENSSL_SRC=%DEV_DIR%\openssl
-set OPENSSL_INSTALL=%INSTALLS_DIR%\openssl
+set OPENSSL_INSTALL=%INSTALLS_DIR%\libcurl_deps
 set OPENSSL_INCLUDE=%OPENSSL_INSTALL%\include
 set OPENSSL_LIB=%OPENSSL_INSTALL%\lib
 set OPENSSL_BIN=%OPENSSL_INSTALL%\bin

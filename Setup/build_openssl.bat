@@ -29,6 +29,8 @@ call ms\do_ms
 nmake -f ms\ntdll.mak
 nmake -f ms\ntdll.mak install
 
+set PLATFORM=
+
 cd %WORKING_DIR%
 
 @echo on
