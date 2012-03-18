@@ -21,20 +21,43 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "../ContestManager.hpp"
+#ifndef GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED
+#define GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED
+
+#include "Configuration.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-ContestManager::ContestManager()
-{
-}
 
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-ContestManager::~ContestManager()
+class GCJUTILITY_DLL_LINK ContestManager
 {
-}
+    /// @name Types
+    /// @{
+public:
+    /// @}
+
+    /// @name ContestManager implementation
+    /// @{
+public:
+    /// @}
+
+    /// @name 'Structors
+    /// @{
+public:
+     ContestManager();
+    ~ContestManager();
+    /// @}
+
+    /// @name Member Variables
+    /// @{
+private:
+    /// @}
+
+};  // class ContestManager
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+#endif // GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED

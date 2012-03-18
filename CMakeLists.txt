@@ -28,6 +28,7 @@ list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
 
 set (GCJ_PROJECTS
 	Core
+	Utility
 	Executor
 	Generator
 	Solutions

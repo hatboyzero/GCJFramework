@@ -21,20 +21,43 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "../ContestManager.hpp"
+#ifndef GCJFRAMEWORK_GOOGLE_LOGIN_HPP_INCLUDED
+#define GCJFRAMEWORK_GOOGLE_LOGIN_HPP_INCLUDED
+
+#include "Configuration.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-ContestManager::ContestManager()
-{
-}
 
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-ContestManager::~ContestManager()
+class GCJUTILITY_DLL_LINK GoogleLogin
 {
-}
+    /// @name Types
+    /// @{
+public:
+    /// @}
+
+    /// @name GoogleLogin implementation
+    /// @{
+public:
+    /// @}
+
+    /// @name 'Structors
+    /// @{
+public:
+     GoogleLogin();
+    ~GoogleLogin();
+    /// @}
+
+    /// @name Member Variables
+    /// @{
+private:
+    /// @}
+
+};  // class GoogleLogin
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+#endif // GCJFRAMEWORK_GOOGLE_LOGIN_HPP_INCLUDED

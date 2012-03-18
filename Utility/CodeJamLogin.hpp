@@ -21,20 +21,43 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "../ContestManager.hpp"
+#ifndef GCJFRAMEWORK_CODE_JAM_LOGIN_HPP_INCLUDED
+#define GCJFRAMEWORK_CODE_JAM_LOGIN_HPP_INCLUDED
+
+#include "Configuration.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-ContestManager::ContestManager()
-{
-}
 
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-ContestManager::~ContestManager()
+class GCJUTILITY_DLL_LINK CodeJamLogin
 {
-}
+    /// @name Types
+    /// @{
+public:
+    /// @}
+
+    /// @name CodeJamLogin implementation
+    /// @{
+public:
+    /// @}
+
+    /// @name 'Structors
+    /// @{
+public:
+     CodeJamLogin();
+    ~CodeJamLogin();
+    /// @}
+
+    /// @name Member Variables
+    /// @{
+private:
+    /// @}
+
+};  // class CodeJamLogin
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+#endif // GCJFRAMEWORK_CODE_JAM_LOGIN_HPP_INCLUDED

@@ -103,9 +103,9 @@ Environment::loadSessionInfo(const boost::filesystem::path& _path)
 bool
 Environment::loadSessionInfo(std::istream& _input)
 {
-    std::string json;
-    _input >> std::noskipws >> json;
-    if (m_sessionInfo.Parse<0>(json.c_str()).HasParseError())
+    std::stringstream json;
+    json << _input.rdbuf();
+    if (m_sessionInfo.Parse<0>(json.str().c_str()).HasParseError())
     {
         BOOST_LOG_TRIVIAL(error) << "JSON parsing error when loading session info from input stream";
         return false;
