@@ -9,7 +9,7 @@ set ( CPACK_PACKAGE_INSTALL_DIRECTORY "GCJFramework" )
 set ( CPACK_PACKAGE_NAME "GCJFramework" )
 set ( CPACK_PACKAGE_VENDOR "hatboystudios.com" )
 
-set ( CPACK_RESOURCE_FILE_LICENSE "${GCJ_PARENT}/GCJFramework/Setup/Package/license.txt" )
+set ( CPACK_RESOURCE_FILE_LICENSE "${GCJ_PARENT}/GCJFramework/license.txt" )
 set ( CPACK_PACKAGE_ICON "${GCJ_PARENT}/GCJFramework/Setup/Package/gcjframework.ico" )
 
 set ( CPACK_PACKAGE_CONTACT "Matthew Alan Gray <mgray@hatboystudios.com>" )

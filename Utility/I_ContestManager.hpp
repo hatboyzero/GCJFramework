@@ -16,69 +16,76 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_I_MODULE_HPP_INCLUDED
-#define GCJFRAMEWORK_I_MODULE_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_I_CONTEST_MANAGER_HPP_INCLUDED
+#define GCJFRAMEWORK_I_CONTEST_MANAGER_HPP_INCLUDED
 
 #include "Configuration.hpp"
 
+#include <boost/filesystem.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-
-#include <string>
-#include <list>
-
-#ifdef HOST_POSIX
-#include <dlfcn.h>
-#endif //HOST_POSIX
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-// Forward declarations
-class I_Solution;
+class I_Contest;
 
-/// Base class for a loadable problem module
-/// A solution DLL should implement one of these
-class GCJCORE_DLL_LINK I_Module
+class GCJUTILITY_DLL_LINK I_ContestManager
 :   public boost::noncopyable
 {
+    /// @name Forward Declarations
+    /// @{
+public:
+    struct I_ContestVisitor;
+    /// @}
+
     /// @name Types
     /// @{
 public:
-    typedef boost::shared_ptr<I_Solution>    pSolution_type;
-
-#ifdef HOST_WIN32
-    typedef I_Module& (*proc_ptr_type)();
-#elif HOST_POSIX
-    typedef I_Module& (*QUERY_MODULE_FUNCTION_PTR)();
-#else
-#error Unsupported platform in I_Module.hpp
-#endif
+    typedef boost::shared_ptr<I_Contest>        pContest_type;
+    typedef boost::shared_ptr<I_ContestManager> pContestManager_type;
     /// @}
 
-    /// @name I_Module interface
+    /// @name I_ContestManager interface
     /// @{
 public:
-    /// Returns a solution.
-    /// For now, Solutions are all considered singletons. The problem should
-    /// normally not be created until getSolution is called, in case the solution
-    /// isn't required.
-    /// @return The solution instance.
-    virtual pSolution_type getSolution() = 0;
+    virtual bool setLocation(const boost::filesystem::path& _location) = 0;
+    virtual bool loadContest(const std::string& _contestId) = 0;
+    virtual pContest_type getContest(const std::string& _contestId) const = 0;
+    virtual void getContests(I_ContestVisitor& _visitor) const = 0;
+    /// @}
+
+    /// @name Internal Structures
+    /// @{
+public:
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    struct I_ContestVisitor
+    {
+        virtual void begin() = 0;
+        virtual void visit(pContest_type _pContest) = 0;
+        virtual void end() = 0;
+    };  // struct I_ContestVisitor
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    /// @}
+
+    /// @name Static Methods
+    /// @{
+public:
+    static pContestManager_type create();
     /// @}
 
     /// @name 'Structors
     /// @{
 protected:
-             I_Module();
-    virtual ~I_Module();
+             I_ContestManager();
+    virtual ~I_ContestManager();
     /// @}
 
-};  // interface I_Module
+};  // interface ContestManager
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORK_I_MODULE_HPP_INCLUDED
+#endif // GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED

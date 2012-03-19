@@ -16,11 +16,15 @@ Find_Package (CURL REQUIRED)
 Find_Package (RapidJSON REQUIRED)
 
 set (GCJExecutor_SRC
-    src/Environment.cpp
-	src/Environment.hpp
     src/main.cpp
 	src/SolutionExecutive.cpp
 	src/SolutionExecutive.hpp
+	src/DatasetManager.cpp
+	src/DatasetManager.hpp
+	src/InputDownloader.cpp
+	src/InputDownloader.hpp
+	src/OutputSubmitter.cpp
+	src/OutputSubmitter.hpp
 )
 
 set (GCJExecutor_DEFINITIONS ${GCJ_DEFINITIONS})

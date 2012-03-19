@@ -40,13 +40,13 @@ foreach (PROJECT_PATH ${GCJ_PROJECTS})
 endforeach (PROJECT_PATH)
 
 install (FILES
-	"${GCJ_PARENT}/GCJFramework/Setup/Package/license.txt"
+	"${GCJ_PARENT}/GCJFramework/license.txt"
 	DESTINATION
 	./
 )
 
 install (FILES
-	"${GCJ_PARENT}/GCJFramework/Setup/Package/license.txt"
+	"${GCJ_PARENT}/GCJFramework/license.txt"
 	DESTINATION
 	"${GCJ_PARENT}/installs/GCJFramework"
 )

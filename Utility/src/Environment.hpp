@@ -16,54 +16,57 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
-#define GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_ENVIRONMENT_HPP_INCLUDED
+#define GCJFRAMEWORK_ENVIRONMENT_HPP_INCLUDED
 
-#include "Configuration.hpp"
+#include "../I_Environment.hpp"
 
-#include <boost/noncopyable.hpp>
-#include <boost/filesystem/path.hpp>
+#include <rapidjson/document.h>
 
-#include <string>
+#include <iostream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class I_Module;
-
-class GCJCORE_DLL_LINK I_ModuleService
-:   public boost::noncopyable
+class Environment
+:   public I_Environment
 {
     /// @name Types
     /// @{
 public:
-    /// This is a raw pointer because the lifetime
-    /// is handled by load / unload pairs.
-    typedef I_Module*                   pModule_type;
     /// @}
 
-    /// @name I_ModuleService interface
+    /// @name Environment implementation
     /// @{
 public:
-    /// Load a module.
-    virtual pModule_type load(const std::string& _moduleName) = 0;
-
-    /// Unload a module.
-    virtual void unload(pModule_type _module) = 0;
+    virtual bool loadConfiguration(const boost::filesystem::path& _path);
+    virtual bool loadConfiguration(std::istream& _input);
+    virtual bool loadSessionInfo(const boost::filesystem::path& _path);
+    virtual bool loadSessionInfo(std::istream& _input);
+    virtual bool saveSessionInfo(const boost::filesystem::path& _path);
+    virtual bool saveSessionInfo(std::ostream& _output);
+    virtual const std::string operator[](const std::string& _key) const;
     /// @}
 
     /// @name 'Structors
     /// @{
-protected:
-             I_ModuleService();
-    virtual ~I_ModuleService();
+public:
+             Environment();
+    virtual ~Environment();
     /// @}
 
-};  // interface I_ModuleService
+    /// @name Member Variables
+    /// @{
+private:
+    rapidjson::Document m_configuration;
+    rapidjson::Document m_sessionInfo;
+    /// @}
+
+};  // class Environment
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}	// namespace GCJFramework
+}   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+#endif // GCJFRAMEWORK_ENVIRONMENT_HPP_INCLUDED

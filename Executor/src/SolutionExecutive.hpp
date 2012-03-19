@@ -3,28 +3,24 @@
 //
 // Copyright (C) 2012 Matthew Alan Gray
 //
+//  This software is licensed as described in the file license.txt, which you
+//  should have received as part of this distribution.
+//
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
 //  arising from the use of this software.
 //
 //  Permission is granted to anyone to use this software for any purpose,
 //  including commercial applications, and to alter it and redistribute it
-//  freely, subject to the following restrictions:
-//
-//  1. The origin of this software must not be misrepresented; you must not
-//     claim that you wrote the original software. If you use this software
-//     in a product, an acknowledgment in the product documentation would be
-//     appreciated but is not required.
-//  2. Altered source versions must be plainly marked as such, and must not be
-//     misrepresented as being the original software.
-//  3. This notice may not be removed or altered from any source distribution.
+//  freely, subject to the terms described in the file license.txt.
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
 #define GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
 
-#include "Environment.hpp"
+#include <GCJFramework/Utility/I_Environment.hpp>
+#include <GCJFramework/Utility/I_ContestManager.hpp>
 
 #include <boost/filesystem.hpp>
 
@@ -55,8 +51,9 @@ public:
     /// @name Member Variables
     /// @{
 private:
-    boost::filesystem::path         m_configPath;
-    Environment                     m_environment;
+    boost::filesystem::path                 m_configPath;
+    I_Environment::pEnvironment_type        m_pEnvironment;
+    I_ContestManager::pContestManager_type  m_pContestManager;
     /// @}
 
 };  // class SolutionExecutive

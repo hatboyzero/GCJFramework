@@ -3,61 +3,54 @@
 //
 // Copyright (C) 2012 Matthew Alan Gray
 //
+//  This software is licensed as described in the file license.txt, which you
+//  should have received as part of this distribution.
+//
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
 //  arising from the use of this software.
 //
 //  Permission is granted to anyone to use this software for any purpose,
 //  including commercial applications, and to alter it and redistribute it
-//  freely, subject to the following restrictions:
-//
-//  1. The origin of this software must not be misrepresented; you must not
-//     claim that you wrote the original software. If you use this software
-//     in a product, an acknowledgment in the product documentation would be
-//     appreciated but is not required.
-//  2. Altered source versions must be plainly marked as such, and must not be
-//     misrepresented as being the original software.
-//  3. This notice may not be removed or altered from any source distribution.
+//  freely, subject to the terms described in the file license.txt.
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED
-#define GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_I_GOOGLE_LOGIN_HPP_INCLUDED
+#define GCJFRAMEWORK_I_GOOGLE_LOGIN_HPP_INCLUDED
 
 #include "Configuration.hpp"
+
+#include <boost/noncopyable.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class GCJUTILITY_DLL_LINK ContestManager
+class GCJUTILITY_DLL_LINK I_GoogleLogin
+:   public boost::noncopyable
 {
     /// @name Types
     /// @{
 public:
     /// @}
 
-    /// @name ContestManager implementation
+    /// @name GoogleLogin interface
     /// @{
 public:
     /// @}
 
     /// @name 'Structors
     /// @{
-public:
-     ContestManager();
-    ~ContestManager();
+protected:
+             I_GoogleLogin();
+    virtual ~I_GoogleLogin();
     /// @}
 
-    /// @name Member Variables
-    /// @{
-private:
-    /// @}
-
-};  // class ContestManager
+};  // interface I_GoogleLogin
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORK_CONTEST_MANAGER_HPP_INCLUDED
+#endif // GCJFRAMEWORK_I_GOOGLE_LOGIN_HPP_INCLUDED

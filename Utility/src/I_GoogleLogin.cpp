@@ -16,54 +16,20 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
-#define GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
-
-#include "Configuration.hpp"
-
-#include <boost/noncopyable.hpp>
-#include <boost/filesystem/path.hpp>
-
-#include <string>
+#include "../I_GoogleLogin.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-class I_Module;
-
-class GCJCORE_DLL_LINK I_ModuleService
-:   public boost::noncopyable
+I_GoogleLogin::I_GoogleLogin()
 {
-    /// @name Types
-    /// @{
-public:
-    /// This is a raw pointer because the lifetime
-    /// is handled by load / unload pairs.
-    typedef I_Module*                   pModule_type;
-    /// @}
-
-    /// @name I_ModuleService interface
-    /// @{
-public:
-    /// Load a module.
-    virtual pModule_type load(const std::string& _moduleName) = 0;
-
-    /// Unload a module.
-    virtual void unload(pModule_type _module) = 0;
-    /// @}
-
-    /// @name 'Structors
-    /// @{
-protected:
-             I_ModuleService();
-    virtual ~I_ModuleService();
-    /// @}
-
-};  // interface I_ModuleService
+}
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}	// namespace GCJFramework
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+I_GoogleLogin::~I_GoogleLogin()
+{
+}
 
-#endif // GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+}   // namespace GCJFramework
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

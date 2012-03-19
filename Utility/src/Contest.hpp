@@ -16,54 +16,65 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
-#define GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_CONTEST_HPP_INCLUDED
+#define GCJFRAMEWORK_CONTEST_HPP_INCLUDED
 
-#include "Configuration.hpp"
+#include <GCJFramework/Core/I_Contest.hpp>
 
-#include <boost/noncopyable.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/shared_ptr.hpp>
 
-#include <string>
+#include <map>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class I_Module;
+class I_Solution;
 
-class GCJCORE_DLL_LINK I_ModuleService
-:   public boost::noncopyable
+class Contest
+:   public I_Contest
 {
     /// @name Types
     /// @{
 public:
-    /// This is a raw pointer because the lifetime
-    /// is handled by load / unload pairs.
-    typedef I_Module*                   pModule_type;
+    typedef boost::shared_ptr<I_Solution>   pSolution_type;
     /// @}
 
-    /// @name I_ModuleService interface
+    /// @name I_Contest implementation
     /// @{
 public:
-    /// Load a module.
-    virtual pModule_type load(const std::string& _moduleName) = 0;
+    virtual bool loadSolutions();
+    /// @}
 
-    /// Unload a module.
-    virtual void unload(pModule_type _module) = 0;
+    /// @name Contest implementation
+    /// @{
+public:
+    void clearSolutions();
     /// @}
 
     /// @name 'Structors
     /// @{
-protected:
-             I_ModuleService();
-    virtual ~I_ModuleService();
+public:
+             Contest(const boost::filesystem::path& _path);
+    virtual ~Contest();
     /// @}
 
-};  // interface I_ModuleService
+    /// @name Member Variables
+    /// @{
+private:
+    boost::filesystem::path     m_path;
+
+    boost::mutex                m_solutionsMutex;
+    typedef std::map<std::string, pSolution_type>   Solutions_type;
+    Solutions_type              m_solutions;
+    /// @}
+
+};  // class Contest
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}	// namespace GCJFramework
+}   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+#endif // GCJFRAMEWORK_CONTEST_HPP_INCLUDED

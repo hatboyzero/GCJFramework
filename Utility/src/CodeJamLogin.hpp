@@ -16,54 +16,44 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
-#define GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+#ifndef GCJFRAMEWORK_CODE_JAM_LOGIN_HPP_INCLUDED
+#define GCJFRAMEWORK_CODE_JAM_LOGIN_HPP_INCLUDED
 
-#include "Configuration.hpp"
-
-#include <boost/noncopyable.hpp>
-#include <boost/filesystem/path.hpp>
-
-#include <string>
+#include "../I_CodeJamLogin.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class I_Module;
-
-class GCJCORE_DLL_LINK I_ModuleService
-:   public boost::noncopyable
+class CodeJamLogin
+:   public I_CodeJamLogin
 {
     /// @name Types
     /// @{
 public:
-    /// This is a raw pointer because the lifetime
-    /// is handled by load / unload pairs.
-    typedef I_Module*                   pModule_type;
     /// @}
 
-    /// @name I_ModuleService interface
+    /// @name CodeJamLogin implementation
     /// @{
 public:
-    /// Load a module.
-    virtual pModule_type load(const std::string& _moduleName) = 0;
-
-    /// Unload a module.
-    virtual void unload(pModule_type _module) = 0;
     /// @}
 
     /// @name 'Structors
     /// @{
-protected:
-             I_ModuleService();
-    virtual ~I_ModuleService();
+public:
+             CodeJamLogin();
+    virtual ~CodeJamLogin();
     /// @}
 
-};  // interface I_ModuleService
+    /// @name Member Variables
+    /// @{
+private:
+    /// @}
+
+};  // class CodeJamLogin
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}	// namespace GCJFramework
+}   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORKS_I_MODULE_SERVICE_HPP_INCLUDED
+#endif // GCJFRAMEWORK_CODE_JAM_LOGIN_HPP_INCLUDED

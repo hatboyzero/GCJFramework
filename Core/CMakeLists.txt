@@ -16,11 +16,13 @@ SET (LIB_TYPE SHARED)
 
 set (GCJCore_SRC
 	Configuration.hpp
+	I_Contest.hpp
 	I_Module.hpp
 	I_ModuleInfo.hpp
 	I_ModuleManager.hpp
 	I_ModuleService.hpp
 	I_Solution.hpp
+	src/I_Contest.cpp
 	src/I_Module.cpp
 	src/I_ModuleInfo.cpp
 	src/I_ModuleManager.cpp

@@ -1,9 +1,12 @@
 set WGET="%PROGRAMFILES(X86)%\GnuWin32\bin\wget.exe"
 set TAR="%PROGRAMFILES(X86)%\GnuWin32\bin\bsdtar.exe"
+set PATCH="%PROGRAMFILES(X86)%\GnuWin32\bin\patch.exe"
 
 if not exist %WGET% echo Please install wget via http://downloads.sourceforge.net/gnuwin32/wget-1.11.4-1-setup.exe
 
 if not exist %TAR% echo Please install tar via http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-setup.exe
+
+if not exist %PATCH% echo Please install patch via http://gnuwin32.sourceforge.net/downlinks/patch.php -- If you run into UAC issues on Windows 7, run update_patch_manifest.bat as admin.
 
 REM ***Project Information***
 
@@ -64,6 +67,7 @@ set LIBCURL_LIB=%LIBCURL_INSTALL%\lib
 set LIBCURL_BIN=%LIBCURL_INSTALL%\bin
 
 REM *** rapidjson ***
+set RAPIDJSON_REV=64
 set RAPIDJSON_SRC=%DEV_DIR%\rapidjson
 set RAPIDJSON_INSTALL=%INSTALLS_DIR%\rapidjson
 set RAPIDJSON_INCLUDE=%RAPIDJSON_INSTALL%\include
