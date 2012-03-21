@@ -22,7 +22,7 @@ cd %LIBCURL_SRC%
 call buildconf.bat
 
 cd %LIBCURL_SRC%\winbuild
-nmake /f Makefile.vc mode=dll VC=10 WITH_DEVEL=%ZLIB_INSTALL% WITH_ZLIB=dll WITH_SSL=dll DEBUG=no ENABLE_IDN=no
+nmake /f Makefile.vc MODE=dll VC=10 WITH_DEVEL=%ZLIB_INSTALL% WITH_ZLIB=dll WITH_SSL=dll DEBUG=no ENABLE_IDN=no
 
 xcopy %LIBCURL_SRC%\builds\libcurl-release-dll-ssl-dll-zlib--ipv6-sspi\* %LIBCURL_INSTALL% /E /C /I /Q /R /Y
 

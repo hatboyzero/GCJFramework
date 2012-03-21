@@ -16,77 +16,111 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "GoogleLogin.hpp"
+#include "HTTPManager.hpp"
+
+#include <boost/log/trivial.hpp>
+
+#include <sstream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-GoogleLogin::GoogleLogin()
+HTTPManager::HTTPManager()
+:   m_pCurlHandle(NULL)
 {
+    try {
+        init();
+    } catch (std::exception& _e) {
+        std::stringstream stream;
+        stream << "Caught exception: " << _e.what();
+        BOOST_LOG_TRIVIAL(error) << stream.str();
+    } catch (...) {
+        std::stringstream stream;
+        stream << "Caught unknown exception.";
+        BOOST_LOG_TRIVIAL(error) << stream.str();
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-GoogleLogin::~GoogleLogin()
+HTTPManager::~HTTPManager()
 {
+    try {
+        cleanup();
+    } catch (std::exception& _e) {
+        std::stringstream stream;
+        stream << "Caught exception: " << _e.what();
+        BOOST_LOG_TRIVIAL(error) << stream.str();
+    } catch (...) {
+        std::stringstream stream;
+        stream << "Caught unknown exception.";
+        BOOST_LOG_TRIVIAL(error) << stream.str();
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-GoogleLogin::pSession_type
-GoogleLogin::login(const std::string& _host,
-                   const std::string& _accountType,
-                   const std::string& _user,
-                   const std::string& _password,
-                   const std::string& _service,
-                   const std::string& _source,
-                   bool _secure)
+HTTPManager::pResponse_type
+HTTPManager::get(const std::string& _host,
+                 const std::string& _url,
+                 pRequest_type _pRequest)
+{
+    /// TODO Implement.
+    throw std::exception("Not implemented");
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+HTTPManager::pResponse_type
+HTTPManager::post(const std::string& _host,
+                  const std::string& _url,
+                  pRequest_type _pRequest)
+{
+    /// TODO Implement.
+    throw std::exception("Not implemented");
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+HTTPManager::pRequest_type
+HTTPManager::createRequest()
 {
     /// TODO Implement.
     throw std::exception("Not implemented.");
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-const boost::posix_time::ptime&
-GoogleLogin::getExpirationTime(const Session& _session)
+void
+HTTPManager::init()
 {
-    /// TODO Implement.
-    throw std::exception("Not implemented.");
+    curl_global_init(CURL_GLOBAL_ALL);
+
+    m_pCurlHandle = curl_easy_init();
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-bool
-GoogleLogin::hasExpired(const Session& _session)
+void
+HTTPManager::cleanup()
 {
-    /// TODO Implement.
-    throw std::exception("Not implemented.");
+    curl_easy_cleanup(m_pCurlHandle);
+    curl_global_cleanup();
+    m_pCurlHandle = NULL;
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-const std::string&
-GoogleLogin::getAuthToken(const std::string& _accountType,
-                          const std::string& _user,
-                          const std::string& _password,
-                          const std::string& _service,
-                          const std::string& _source)
+HTTPManager::Request::Request()
 {
-    /// TODO Implement.
-    throw std::exception("Not implemented.");
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-GoogleLogin::pSession_type
-GoogleLogin::populateSession(const std::string& _authToken,
-                             const std::string& _cookie)
+HTTPManager::Request::~Request()
 {
-    /// TODO Implement.
-    throw std::exception("Not implemented.");
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-GoogleLogin::pSession_type
-GoogleLogin::parseCookie(const std::string& _cookie)
+HTTPManager::Response::Response()
 {
-    /// TODO Implement.
-    throw std::exception("Not implemented.");
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+HTTPManager::Response::~Response()
+{
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

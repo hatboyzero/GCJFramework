@@ -12,6 +12,8 @@ list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
 
 Find_Package(Boost REQUIRED serialization system filesystem)
 Find_Package (RapidJSON REQUIRED)
+Find_Package (ZLIB REQUIRED)
+Find_Package (CURL REQUIRED)
 
 SET (LIB_TYPE SHARED)
 
@@ -21,26 +23,30 @@ set (GCJUtility_SRC
 	I_ContestManager.hpp
 	I_Environment.hpp
 	I_GoogleLogin.hpp
+	I_HTTPManager.hpp
 	src/CodeJamLogin.hpp
 	src/ContestManager.hpp
 	src/Environment.hpp
 	src/GoogleLogin.hpp
+	src/HTTPManager.hpp
 	src/Contest.hpp
 	src/Contest.cpp
 	src/I_CodeJamLogin.cpp
 	src/I_ContestManager.cpp
 	src/I_Environment.cpp
 	src/I_GoogleLogin.cpp
+	src/I_HTTPManager.cpp
 	src/CodeJamLogin.cpp
 	src/ContestManager.cpp
 	src/Environment.cpp
 	src/GoogleLogin.cpp
+	src/HTTPManager.cpp
 )
 
 set (GCJUtility_DEFINITIONS -DGCJUTILITY_EXPORTS ${GCJ_DEFINITIONS})
 add_definitions (${GCJUtility_DEFINITIONS})
 
-include_directories (${GCJ_PARENT} ${Boost_INCLUDE_DIR} ${RapidJSON_INCLUDE_DIRS})
+include_directories (${GCJ_PARENT} ${Boost_INCLUDE_DIR} ${RapidJSON_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS})
 
 link_directories (${Boost_LIBRARY_DIRS})
 
@@ -48,7 +54,7 @@ add_library (GCJUtility ${LIB_TYPE} ${GCJUtility_SRC})
 
 add_dependencies (GCJUtility GCJCore)
 
-target_link_libraries (GCJUtility GCJCore ${Boost_LIBRARIES})
+target_link_libraries (GCJUtility GCJCore ${Boost_LIBRARIES} ${ZLIB_LIBRARIES} ${CURL_LIBRARIES})
 
 set_target_properties (GCJUtility PROPERTIES DEBUG_POSTFIX "_d")
 
