@@ -91,7 +91,7 @@ ContestManager::loadContest(const std::string& _contestId)
         Contests_type::iterator iter = m_contests.find(_contestId);
         if (iter == m_contests.end())
         {
-            stream.clear();
+            stream.str("");
             stream << "Loading Contest-" << _contestId << "...";
             BOOST_LOG_TRIVIAL(info) << stream.str();
 
@@ -101,7 +101,7 @@ ContestManager::loadContest(const std::string& _contestId)
             {
                 m_contests[_contestId] = pContest;
 
-                stream.clear();
+                stream.str("");
                 stream << "Loaded Contest-" << _contestId << ".";
                 BOOST_LOG_TRIVIAL(info) << stream.str();
                 return true;
@@ -109,7 +109,7 @@ ContestManager::loadContest(const std::string& _contestId)
         }
     }
 
-    stream.clear();
+    stream.str("");
     stream << "Failed to load Contest-" << _contestId << "!";
     BOOST_LOG_TRIVIAL(error) << stream.str();
     return false;

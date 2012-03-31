@@ -30,6 +30,7 @@
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
+/// Base class for a solution object.
 class GCJCORE_DLL_LINK I_Solution
 :   public boost::noncopyable
 {
@@ -41,8 +42,20 @@ public:
     /// @name I_Solution interface
     /// @{ 
 public:
+    /// Gets the name of the solution.
+    /// @return The name of the solution.
     virtual const std::string& getName() const = 0;
+
+    /// Validates the solution against the sample inputs and outputs
+    /// for the associated problem.
+    /// @return True if validation is successful, False otherwise.
     virtual bool validate() const = 0;
+
+    /// Executes the solution against a specified input type.
+    /// Typically "small" or "large"
+    /// @param[in] Type of input - { "validation", "small", "large" }
+    /// @return True if the execution is successful (but not necessarily
+    ///         correct), False otherwise.
     virtual bool execute(const std::string& _type) const = 0;
     /// @}
 

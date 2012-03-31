@@ -62,7 +62,7 @@ Contest::loadSolutions()
     {
         if (boost::filesystem::is_directory(iter->path()))
         {
-            stream.clear();
+            stream.str("");
             std::string solutionName = iter->path().leaf().string();
             stream << "Loading solution " << solutionName << "...";
             BOOST_LOG_TRIVIAL(info) << stream.str();
@@ -89,7 +89,7 @@ Contest::loadSolutions()
             }
             else
             {
-                stream.clear();
+                stream.str("");
                 stream << "Error loading solution " << solutionName << "!";
                 BOOST_LOG_TRIVIAL(warning) << stream.str();
             }
