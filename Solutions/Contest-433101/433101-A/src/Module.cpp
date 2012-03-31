@@ -34,6 +34,9 @@ public:
     /// @name I_Module implementation
     /// @{
 public:
+    virtual const std::string& getName() const;
+    virtual void setPath(const boost::filesystem::path& _path);
+    virtual const boost::filesystem::path& getPath() const;
     virtual pSolution_type getSolution();
     /// @}
 
@@ -81,20 +84,45 @@ public:
     /// @name Member Variables
     /// @{
 private:
-    pSolution_type  m_pSolution;
+    const std::string       m_name;
+    boost::filesystem::path m_path;
+    pSolution_type          m_pSolution;
     /// @}
 
 };  // class Module
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 Module::Module()
-:   m_pSolution(new Solution(this),Module::Deleter())
+:   m_name("433101-A")
+,   m_path()
+,   m_pSolution(new Solution(this),Module::Deleter())
 {
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 Module::~Module()
 {
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+const std::string&
+Module::getName() const
+{
+    return m_name;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+Module::setPath(const boost::filesystem::path& _path)
+{
+    m_path = _path;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+const boost::filesystem::path&
+Module::getPath() const
+{
+    return m_path;
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

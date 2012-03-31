@@ -72,7 +72,7 @@ ModuleService::load(const std::string& _moduleName)
     if(!pModuleManager->findPath(_moduleName, modulePath))
     {
         std::stringstream stream;
-        stream << "Module " << _moduleName << " not found in defined module search paths." << std::endl;
+        stream << "Module " << _moduleName << " not found in defined module search paths.";
         BOOST_LOG_TRIVIAL(error) << stream.str();
 
         throw std::exception(stream.str().c_str());
@@ -83,7 +83,7 @@ ModuleService::load(const std::string& _moduleName)
 #ifdef _WIN32
     I_ModuleInfo::ModuleHandle_type hModule = LoadLibraryA(modulePath.string().c_str());
 #else
-    BOOST_LOG_TRIVIAL(info) << "dlopen " << modulePath.string().c_str() << std::endl;
+    BOOST_LOG_TRIVIAL(info) << "dlopen " << modulePath.string().c_str();
     I_ModuleInfo::ModuleHandle_type hModule = dlopen(modulePath.string().c_str(), RTLD_NOW | RTLD_GLOBAL);
 #endif // _WIN32
 
@@ -92,11 +92,11 @@ ModuleService::load(const std::string& _moduleName)
         std::stringstream stream;
         stream << "Error loading module " << modulePath.string()
 #ifndef _WIN32
-        << dlerror()
+            << dlerror()
 #else
             << ": The module is probably missing dependencies not on the path.  Use depends.exe to figure it out."
 #endif
-            << std::endl;
+            ;
 
         BOOST_LOG_TRIVIAL(error) << stream.str();
         throw std::exception(stream.str().c_str());
@@ -138,7 +138,7 @@ ModuleService::load(const std::string& _moduleName)
     }
     else
     {
-        BOOST_LOG_TRIVIAL(error) << "Error getting procedure address in module " << modulePath.string() << std::endl;
+        BOOST_LOG_TRIVIAL(error) << "Error getting procedure address in module " << modulePath.string();
 
         // Not found, so return NULL
         return NULL;
@@ -174,7 +174,8 @@ ModuleService::unload(pModule_type _pModule)
 #endif // _WIN32
         {
             std::stringstream stream;
-            stream << "DEBUG: Error unloading module " << moduleName << std::endl;
+            stream << "Error unloading module " << moduleName;
+            BOOST_LOG_TRIVIAL(error) << stream.str();
             throw std::exception(stream.str().c_str());
         }
 

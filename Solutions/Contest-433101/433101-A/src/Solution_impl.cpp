@@ -16,47 +16,33 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_I_SOLUTION_HPP_INCLUDED
-#define GCJFRAMEWORK_I_SOLUTION_HPP_INCLUDED
+#include "Solution.hpp"
 
-#include "Configuration.hpp"
-
-#include <boost/noncopyable.hpp>
-
-#include <iostream>
-#include <string>
+#include <boost/cstdint.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-class GCJCORE_DLL_LINK I_Solution
-:   public boost::noncopyable
+bool
+Solution::execute(std::istream& _inputStream, std::ostream& _outputStream) const
 {
-    /// @name Types
-    /// @{
-public:
-    /// @}
+    boost::uint32_t testCases;
 
-    /// @name I_Solution interface
-    /// @{ 
-public:
-    virtual const std::string& getName() const = 0;
-    virtual bool validate() const = 0;
-    virtual bool execute(const std::string& _type) const = 0;
-    /// @}
+    _inputStream >> testCases;
 
-    /// @{ 'Structors
-protected:
-             I_Solution();
-    virtual ~I_Solution();
-    /// @}
+    for (boost::uint32_t i = 0; i < testCases; ++i)
+    {
+        boost::uint32_t snappers;
+        boost::uint32_t snaps;
+        _inputStream >> snappers >> snaps;
+        boost::uint32_t allOn = (1 << snappers) - 1;
+        bool state = (snaps & allOn) == allOn;
+        _outputStream << "Case #" << i+1 << ": " << (state ? "ON" : "OFF") << std::endl;
+    }
 
-};  // interface I_Solution
+    return true;
+}
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-#endif // GCJFRAMEWORK_I_SOLUTION_HPP_INCLUDED
-

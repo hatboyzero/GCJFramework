@@ -23,22 +23,28 @@
 #include <GCJFramework/Utility/I_ContestManager.hpp>
 
 #include <boost/filesystem.hpp>
+#include <boost/shared_ptr.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+class I_Contest;
 
 class SolutionExecutive
 {
     /// @name Types
     /// @{
 public:
+    typedef boost::shared_ptr<I_Contest>    pContest_type;
     /// @}
 
     /// @name SolutionExecutive implementation
     /// @{
 public:
     void run();
+private:
+    void validate(pContest_type _pContest);
     /// @}
 
     /// @name 'Structors

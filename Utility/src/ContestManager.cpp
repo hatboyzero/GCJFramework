@@ -48,13 +48,12 @@ ContestManager::setLocation(const boost::filesystem::path& _path)
     if (boost::filesystem::exists(_path))
     {
         m_path = _path;
-        stream << "Search path set to " << m_path << std::endl;
+        stream << "Search path set to " << m_path;
         BOOST_LOG_TRIVIAL(info) << stream.str();
-        std::cout << stream.str();
         return true;
     }
 
-    stream << "Search path " << _path << " does not exist!" << std::endl;
+    stream << "Search path " << _path << " does not exist!";
     BOOST_LOG_TRIVIAL(error) << stream.str();
     return false;
 }
@@ -93,9 +92,8 @@ ContestManager::loadContest(const std::string& _contestId)
         if (iter == m_contests.end())
         {
             stream.clear();
-            stream << "Loading Contest-" << _contestId << "..." << std::endl;
+            stream << "Loading Contest-" << _contestId << "...";
             BOOST_LOG_TRIVIAL(info) << stream.str();
-            std::cout << stream.str();
 
             pContest_type pContest(new Contest(contestPath), Deleter());
             
@@ -104,18 +102,16 @@ ContestManager::loadContest(const std::string& _contestId)
                 m_contests[_contestId] = pContest;
 
                 stream.clear();
-                stream << "Loaded Contest-" << _contestId << "." << std::endl;
+                stream << "Loaded Contest-" << _contestId << ".";
                 BOOST_LOG_TRIVIAL(info) << stream.str();
-                std::cout << stream.str();
                 return true;
             }
         }
     }
 
     stream.clear();
-    stream << "Failed to load Contest-" << _contestId << "!" << std::endl;
+    stream << "Failed to load Contest-" << _contestId << "!";
     BOOST_LOG_TRIVIAL(error) << stream.str();
-    std::cout << stream.str();
     return false;
 }
 
@@ -132,9 +128,8 @@ ContestManager::getContest(const std::string& _contestId) const
     }
 
     std::stringstream stream;
-    stream << "Attempted to retrieve Contest-" << _contestId << ", but it does not exist..." << std::endl;
+    stream << "Attempted to retrieve Contest-" << _contestId << ", but it does not exist...";
     BOOST_LOG_TRIVIAL(warning) << stream.str();
-    std::cout << stream.str();
     return pContest_type();
 }
 

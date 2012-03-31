@@ -80,7 +80,7 @@ ModuleManager::dropPath(const boost::filesystem::path& _modulePath)
     else
     {
         std::stringstream stream;
-        stream << "Path " << _modulePath << " is not in the list of module search paths." << std::endl;
+        stream << "Path " << _modulePath << " is not in the list of module search paths.";
         BOOST_LOG_TRIVIAL(error) << stream.str();
 
         throw std::exception(stream.str().c_str());
@@ -122,7 +122,7 @@ ModuleManager::findPath(const std::string _moduleName, boost::filesystem::path &
         // Check if the path is valid
         modulePathFound = boost::filesystem::exists(modulePath);
 
-        BOOST_LOG_TRIVIAL(info) << "Attempting " << modulePath.string() << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "Attempting " << modulePath.string();
 
         // Iterate path iterator
         iter++;

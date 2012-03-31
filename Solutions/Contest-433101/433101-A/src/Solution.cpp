@@ -18,10 +18,12 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "Solution.hpp"
 
+#include <GCJFramework/Core/I_Module.hpp>
 #include <GCJFramework/Core/I_ModuleManager.hpp>
 #include <GCJFramework/Core/I_ModuleService.hpp>
 
 #include <boost/cstdint.hpp>
+#include <boost/log/trivial.hpp>
 
 #include <sstream>
 
@@ -30,47 +32,167 @@ namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 Solution::Solution(I_Module* _pModule)
 :   m_pModule(_pModule)
+,   m_pIs(NULL)
+,   m_pOs(NULL)
 {
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 Solution::~Solution()
 {
+    reset();
+
     I_ModuleManager::getSingleton().getService()->unload(m_pModule);
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-bool
-Solution::validate(std::istream& _inputStream, std::istream& _validationStream)
+const std::string&
+Solution::getName() const
 {
-    std::stringstream outputStream;
-
-    execute(_inputStream, outputStream);
-
-    std::stringstream validationStream;
-    validationStream << _validationStream;
-
-    return outputStream.str().compare(validationStream.str()) == 0;
+    return m_pModule->getName();
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 bool
-Solution::execute(std::istream& _inputStream, std::ostream& _outputStream)
+Solution::validate() const
 {
-    boost::uint32_t testCases;
+    std::stringstream outputStream;
 
-    _inputStream >> testCases;
+    bool success = execute(getInput("validation"), outputStream);
 
-    for (boost::uint32_t i = 0; i < testCases; ++i)
+    if (success)
     {
-        boost::uint8_t snappers;
-        boost::uint32_t snaps;
-        _inputStream >> snappers >> snaps;
-        bool state = snaps & ((1 << snappers) - 1);
-        _outputStream << "Case #" << i+1 << ": " << state ? "ON" : "OFF";
+        std::stringstream inputStream;
+        inputStream << getValidationInput().rdbuf();
+        reset();
+
+        success &= outputStream.str().compare(inputStream.str()) == 0;
+
+        if (!success)
+        {
+            std::stringstream stream;
+            stream << "Validation Failed!!!" << std::endl;
+            stream << "Expected:" << std::endl;
+            stream << inputStream.str() << std::endl;
+            stream << "Instead, got: " << std::endl;
+            stream << outputStream.str();
+            BOOST_LOG_TRIVIAL(error) << stream.str();
+            return false;
+        }
+        else
+        {
+            std::stringstream stream;
+            stream << "Solution " << getName() << " successfully validated!";
+            BOOST_LOG_TRIVIAL(info) << stream.str();
+            return true;
+        }
     }
 
     return true;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+bool
+Solution::execute(const std::string& _type) const
+{
+    return execute(getInput(_type), getOutput(_type));
+    reset();
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+Solution::reset() const
+{
+    if (m_pIs != NULL)
+    {
+        delete m_pIs;
+        m_pIs = NULL;
+    }
+
+    if (m_pOs != NULL)
+    {
+        delete m_pOs;
+        m_pOs = NULL;
+    }
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+std::istream&
+Solution::getInput(const std::string& _type) const
+{
+    boost::filesystem::path inputPath = boost::filesystem::system_complete(
+        m_pModule->getPath().string() + "/datasets/" + getName() + "-" + _type + ".in"
+    ).normalize();
+
+    if (boost::filesystem::exists(inputPath))
+    {
+        if (m_pIs != NULL)
+        {
+            delete m_pIs;
+        }
+
+        m_pIs = new std::ifstream(inputPath.string());
+        return *m_pIs;
+    }
+
+    std::stringstream stream;
+    stream << "Input stream does not exist!";
+    BOOST_LOG_TRIVIAL(error) << stream.str();
+    throw std::exception(stream.str().c_str());
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+std::istream&
+Solution::getValidationInput() const
+{
+    boost::filesystem::path inputPath = boost::filesystem::system_complete(
+        m_pModule->getPath().string() + "/datasets/" + getName() + "-validation.out"
+    ).normalize();
+
+    if (boost::filesystem::exists(inputPath))
+    {
+        if (m_pIs != NULL)
+        {
+            delete m_pIs;
+            m_pIs = NULL;
+        }
+
+        m_pIs = new std::ifstream(inputPath.string());
+        return *m_pIs;
+    }
+
+    std::stringstream stream;
+    stream << "Validation input stream does not exist!";
+    BOOST_LOG_TRIVIAL(error) << stream.str();
+    throw std::exception(stream.str().c_str());
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+std::ostream&
+Solution::getOutput(const std::string& _type) const
+{
+    boost::filesystem::path outputPath = boost::filesystem::system_complete(
+        m_pModule->getPath().string() + "/datasets/" + getName() + "-" + _type + ".out"
+    ).normalize();
+
+    if (m_pOs != NULL)
+    {
+        delete m_pOs;
+        m_pOs = NULL;
+    }
+
+    try
+    {
+        m_pOs = new std::ofstream(outputPath.string());
+        return *m_pOs;
+    }
+    catch (std::exception& _e)
+    {
+        std::stringstream stream;
+        stream << "Output stream could not be created! --" << _e.what();
+        BOOST_LOG_TRIVIAL(error) << stream.str();
+        throw std::exception(stream.str().c_str());
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

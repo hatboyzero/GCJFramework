@@ -23,7 +23,6 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/shared_ptr.hpp>
 
 #include <map>
 
@@ -31,27 +30,39 @@
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class I_Solution;
-
 class Contest
 :   public I_Contest
 {
     /// @name Types
     /// @{
 public:
-    typedef boost::shared_ptr<I_Solution>   pSolution_type;
     /// @}
 
     /// @name I_Contest implementation
     /// @{
 public:
+    virtual const std::string& getName() const;
     virtual bool loadSolutions();
+    virtual pSolution_type getSolution(const std::string& _name);
+    virtual void getSolutions(I_SolutionVisitor& _visitor) const;
     /// @}
 
     /// @name Contest implementation
     /// @{
 public:
     void clearSolutions();
+    /// @}
+
+    /// @name Inner Structures
+    /// @{
+public:
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    struct SolutionContext
+    {
+        pSolution_type          m_pSolution;
+        boost::filesystem::path m_datasetPath;
+    };  // struct SolutionContext
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
     /// @}
 
     /// @name 'Structors
@@ -64,10 +75,11 @@ public:
     /// @name Member Variables
     /// @{
 private:
+    const std::string           m_name;
     boost::filesystem::path     m_path;
 
-    boost::mutex                m_solutionsMutex;
-    typedef std::map<std::string, pSolution_type>   Solutions_type;
+    mutable boost::mutex        m_solutionsMutex;
+    typedef std::map<std::string, SolutionContext>   Solutions_type;
     Solutions_type              m_solutions;
     /// @}
 

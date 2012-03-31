@@ -22,6 +22,7 @@
 #include "Configuration.hpp"
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include <iostream>
 
@@ -29,18 +30,43 @@
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
+class I_Solution;
+
 class GCJCORE_DLL_LINK I_Contest
 :   public boost::noncopyable
 {
+    /// @name Forward Declarations
+    /// @{
+public:
+    struct I_SolutionVisitor;
+    /// @}
+
     /// @name Types
     /// @{
 public:
+    typedef boost::shared_ptr<I_Solution>   pSolution_type;
     /// @}
 
     /// @name I_Contest interface
     /// @{ 
 public:
+    virtual const std::string& getName() const = 0;
     virtual bool loadSolutions() = 0;
+    virtual pSolution_type getSolution(const std::string& _name) = 0;
+    virtual void getSolutions(I_SolutionVisitor& _visitor) const = 0;
+    /// @}
+
+    /// @name Inner Structures
+    /// @{
+public:
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    struct I_SolutionVisitor
+    {
+        virtual void begin() = 0;
+        virtual void visit(const I_Solution& _solution) = 0;
+        virtual void end() = 0;
+    };  // interface I_SolutionVisitor
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
     /// @}
 
     /// @{ 'Structors

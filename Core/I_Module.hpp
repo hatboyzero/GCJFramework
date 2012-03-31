@@ -22,6 +22,7 @@
 #include "Configuration.hpp"
 
 #include <boost/noncopyable.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include <string>
@@ -60,6 +61,18 @@ public:
     /// @name I_Module interface
     /// @{
 public:
+    /// Gets the name of the solution provided by this module.
+    /// @return The name of the solution provided by this module.
+    virtual const std::string& getName() const = 0;
+
+    /// Sets the root path of the solution provided by this module.
+    /// @param[in] _path The root path of the solution provided by this module.
+    virtual void setPath(const boost::filesystem::path& _path) = 0;
+
+    /// Gets the root path of the solution provided by this module.
+    /// @return The root path of the solution provided by this module.
+    virtual const boost::filesystem::path& getPath() const = 0;
+
     /// Returns a solution.
     /// For now, Solutions are all considered singletons. The problem should
     /// normally not be created until getSolution is called, in case the solution

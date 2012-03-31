@@ -38,13 +38,19 @@ public:
     /// @name I_Solution implementation
     /// @{
 public:
-    virtual bool validate(std::istream& _inputStream, std::istream& _validationStream);
-    virtual bool execute(std::istream& _inputStream, std::ostream& _outputStream);
+    virtual const std::string& getName() const;
+    virtual bool validate() const;
+    virtual bool execute(const std::string& _type) const;
     /// @}
 
     /// @name Solution implementation
     /// @{
 public:
+    void reset() const;
+    bool execute(std::istream& _inputStream, std::ostream& _outputStream) const;
+    std::istream& getInput(const std::string& _type) const;
+    std::istream& getValidationInput() const;
+    std::ostream& getOutput(const std::string& _type) const;
     /// @}
 
     /// @name 'Structors
@@ -57,7 +63,9 @@ public:
     /// @name Member Variables
     /// @{
 private:
-    I_Module*   m_pModule;
+    I_Module*               m_pModule;
+    mutable std::istream*   m_pIs;
+    mutable std::ostream*   m_pOs;
     /// @}
 
 };  // class Solution

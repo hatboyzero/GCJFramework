@@ -21,6 +21,7 @@
 #include <GCJFramework/Core/I_ModuleManager.hpp>
 #include <GCJFramework/Core/I_ModuleService.hpp>
 #include <GCJFramework/Core/I_Module.hpp>
+#include <GCJFramework/Core/I_Contest.hpp>
 #include <GCJFramework/Core/I_Solution.hpp>
 
 #include <boost/log/trivial.hpp>
@@ -49,9 +50,8 @@ SolutionExecutive::run()
     if (!boost::filesystem::exists(m_configPath))
     {
         std::stringstream stream;
-        stream << "Configuration path \"" << m_configPath << "\" does not exist." << std::endl;
+        stream << "Configuration path \"" << m_configPath << "\" does not exist.";
         BOOST_LOG_TRIVIAL(error) << stream.str();
-        std::cout << stream.str();
         return;
     }
 
@@ -64,9 +64,8 @@ SolutionExecutive::run()
     if (locationPathStr.empty())
     {
         std::stringstream stream;
-        stream << "Solution path not defined -- verify \"location\" is defined in config.json" << std::endl;
+        stream << "Solution path not defined -- verify \"location\" is defined in config.json";
         BOOST_LOG_TRIVIAL(error) << stream.str();
-        std::cout << stream.str();
         return;
     }
 
@@ -83,9 +82,8 @@ SolutionExecutive::run()
     if (contestId.empty())
     {
         std::stringstream stream;
-        stream << "Contest not defined -- verify \"contest\" is defined in config.json" << std::endl;
+        stream << "Contest not defined -- verify \"contest\" is defined in config.json";
         BOOST_LOG_TRIVIAL(error) << stream.str();
-        std::cout << stream.str();
         return;
     }
 
@@ -94,6 +92,56 @@ SolutionExecutive::run()
         return;
     }
 
+    I_ContestManager::pContest_type pContest = 
+        m_pContestManager->getContest(contestId);
+
+    if (pContest.get() == NULL)
+    {
+        return;
+    }
+
+    validate(pContest);
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+SolutionExecutive::validate(pContest_type _pContest)
+{
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    class SolutionVisitor
+    :   public I_Contest::I_SolutionVisitor
+    {
+    public:
+        virtual void begin() {}
+
+        virtual void visit(const I_Solution& _solution)
+        {
+            try
+            {
+                _solution.validate();
+            }
+            catch (std::exception& _e)
+            {
+                std::stringstream stream;
+                stream << "Caught exception during validation of " << _solution.getName();
+                stream << " -- " << _e.what();
+                BOOST_LOG_TRIVIAL(error) << stream.str();
+            }
+        }
+
+        virtual void end() {}
+
+        SolutionVisitor()
+        {
+        }
+
+    private:
+
+    };  // class SolutionVisitor
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+   SolutionVisitor visitor;
+   _pContest->getSolutions(visitor);
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

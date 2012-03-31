@@ -31,7 +31,8 @@
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 Contest::Contest(const boost::filesystem::path& _path)
-:   m_path(_path)
+:   m_name(_path.leaf().string())
+,   m_path(_path)
 ,   m_solutionsMutex()
 ,   m_solutions()
 {
@@ -40,6 +41,13 @@ Contest::Contest(const boost::filesystem::path& _path)
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 Contest::~Contest()
 {
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+const std::string&
+Contest::getName() const
+{
+    return m_name;
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -56,9 +64,8 @@ Contest::loadSolutions()
         {
             stream.clear();
             std::string solutionName = iter->path().leaf().string();
-            stream << "Loading solution " << solutionName << "..." << std::endl;
+            stream << "Loading solution " << solutionName << "...";
             BOOST_LOG_TRIVIAL(info) << stream.str();
-            std::cout << stream.str();
 
             boost::filesystem::path modulePath = boost::filesystem::system_complete(
                 iter->path().string() + "/bin"
@@ -75,14 +82,16 @@ Contest::loadSolutions()
             {
                 boost::lock_guard<boost::mutex> guard(m_solutionsMutex);
 
-                m_solutions[solutionName] = pModule->getSolution();
+                pModule->setPath(iter->path());
+                m_solutions[solutionName] = SolutionContext();
+                m_solutions[solutionName].m_pSolution = pModule->getSolution();
+                m_solutions[solutionName].m_datasetPath = iter->path().string() + "/datasets";
             }
             else
             {
                 stream.clear();
-                stream << "Error loading solution " << solutionName << "!" << std::endl;
+                stream << "Error loading solution " << solutionName << "!";
                 BOOST_LOG_TRIVIAL(warning) << stream.str();
-                std::cout << stream.str();
             }
         }
 
@@ -90,6 +99,42 @@ Contest::loadSolutions()
     }
 
     return true;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+Contest::pSolution_type
+Contest::getSolution(const std::string& _name)
+{
+    boost::lock_guard<boost::mutex> guard(m_solutionsMutex);
+
+    Solutions_type::iterator iter = m_solutions.find(_name);
+    if (iter != m_solutions.end())
+    {
+        return iter->second.m_pSolution;
+    }
+
+    std::stringstream stream;
+    stream << "Solution " << _name << " does not exist!";
+    BOOST_LOG_TRIVIAL(warning) << stream.str();
+    return pSolution_type();
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+Contest::getSolutions(I_SolutionVisitor& _visitor) const
+{
+    boost::lock_guard<boost::mutex> guard(m_solutionsMutex);
+
+    _visitor.begin();
+
+    Solutions_type::const_iterator iter = m_solutions.begin();
+    while (iter != m_solutions.end())
+    {
+        _visitor.visit(*iter->second.m_pSolution);
+        iter++;
+    }
+
+    _visitor.end();
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
