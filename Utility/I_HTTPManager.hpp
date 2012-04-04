@@ -52,12 +52,25 @@ public:
                                 const std::string& _url,
                                 pRequest_type _pRequest) = 0;
 
+    virtual pResponse_type postFile(const std::string& _host,
+                                    const std::string& _url,
+                                    pRequest_type _pRequest,
+                                    const std::string& _name,
+                                    std::istream& _input) = 0;
+
     virtual pRequest_type createRequest() = 0;
     /// @}
 
     /// @name Inner Structures
     /// @{
 public:
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    struct I_FieldVisitor
+    {
+        virtual void begin() = 0;
+        virtual void visit(const std::string& _key, const std::string& _value) = 0;
+        virtual void end() = 0;
+    };  // interface I_FieldVisitor
     //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
     class I_Request
     :   public boost::noncopyable
@@ -70,6 +83,11 @@ public:
         /// @name I_Request interface
         /// @{
     public:
+        virtual void setField(const std::string& _key, const std::string& _value) = 0;
+        virtual const std::string getField(const std::string& _key) const = 0;
+        virtual void getFields(I_FieldVisitor& _visitor) const = 0;
+        virtual const std::string toPayloadString() const = 0;
+        virtual const std::string toJSONString() const = 0;
         /// @}
 
         /// @name 'Structors
@@ -92,6 +110,9 @@ public:
         /// @name I_Response interface
         /// @{
     public:
+        virtual const std::string getField(const std::string& _key) const = 0;
+        virtual void getFields(I_FieldVisitor& _visitor) const = 0;
+        virtual const std::string toString() const = 0;
         /// @}
 
         /// @name 'Structors

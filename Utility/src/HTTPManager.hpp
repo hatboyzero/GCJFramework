@@ -23,6 +23,13 @@
 
 #include <curl/curl.h>
 
+#include <rapidjson/document.h>
+
+#include <boost/thread/mutex.hpp>
+
+#include <map>
+#include <string>
+
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -46,6 +53,12 @@ public:
                                 const std::string& _url,
                                 pRequest_type _pRequest);
 
+    virtual pResponse_type postFile(const std::string& _host,
+                                    const std::string& _url,
+                                    pRequest_type _pRequest,
+                                    const std::string& _name,
+                                    std::istream& _input);
+
     virtual pRequest_type createRequest();
     /// @}
 
@@ -55,6 +68,8 @@ public:
 private:
     void init();
     void cleanup();
+
+    static std::size_t getResponse(void* _pData, std::size_t _size, std::size_t _nMemB, void* _pUser);
     /// @}
 
     /// @name Inner Structures
@@ -72,6 +87,11 @@ public:
         /// @name I_Request implementation
         /// @{
     public:
+        virtual void setField(const std::string& _key, const std::string& _value);
+        virtual const std::string getField(const std::string& _key) const;
+        virtual void getFields(I_FieldVisitor& _visitor) const;
+        virtual const std::string toPayloadString() const;
+        virtual const std::string toJSONString() const;
         /// @}
 
         /// @name Request implementation
@@ -89,6 +109,9 @@ public:
         /// @name Member Variables
         /// @{
     private:
+        typedef std::map<std::string, std::string>  Fields_type;
+        Fields_type                 m_fields;
+        mutable boost::mutex        m_fieldsMutex;
         /// @}
 
     };  // class Request
@@ -104,11 +127,15 @@ public:
         /// @name I_Response implementation
         /// @{
     public:
+        virtual const std::string getField(const std::string& _key) const;
+        virtual void getFields(I_FieldVisitor& _visitor) const;
+        virtual const std::string toString() const;
         /// @}
 
         /// @name Response implementation
         /// @{
     public:
+        void parse(const std::string& _json);
         /// @}
 
         /// @name 'Structors
@@ -121,6 +148,9 @@ public:
         /// @name Member Variables
         /// @{
     private:
+        std::string                 m_response;
+        rapidjson::Document         m_document;
+        mutable boost::mutex        m_documentMutex;
         /// @}
 
     };  // class Response

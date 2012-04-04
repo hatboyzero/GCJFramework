@@ -24,6 +24,7 @@ set (Solution_SRC
 	src/Module.cpp
 	src/Solution.hpp
 	src/Solution.cpp
+	src/Solution_impl.cpp
 )
 
 set (Solution_DEFINITIONS ${GCJ_DEFINITIONS} -DSOLUTION_EXPORTS)
