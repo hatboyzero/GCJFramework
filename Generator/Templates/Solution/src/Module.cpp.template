@@ -1,0 +1,157 @@
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+// Google Code Jam Solution Framework
+//
+// Copyright (C) 2012 Matthew Alan Gray
+//
+//  This software is licensed as described in the file license.txt, which you
+//  should have received as part of this distribution.
+//
+//  This software is provided 'as-is', without any express or implied
+//  warranty.  In no event will the authors be held liable for any damages
+//  arising from the use of this software.
+//
+//  Permission is granted to anyone to use this software for any purpose,
+//  including commercial applications, and to alter it and redistribute it
+//  freely, subject to the terms described in the file license.txt.
+//
+//  @author Matthew Alan Gray <mgray@hatboystudios.com>
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+// This file was automatically generated. Do not edit!!!
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+#include "Module.hpp"
+#include "Solution.hpp"
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+namespace GCJFramework {
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+class Module
+:   public I_Module
+{
+    /// @name Types
+    /// @{
+public:
+    /// @}
+
+    /// @name I_Module implementation
+    /// @{
+public:
+    virtual const std::string& getName() const;
+    virtual void setPath(const boost::filesystem::path& _path);
+    virtual const boost::filesystem::path& getPath() const;
+    virtual pSolution_type getSolution();
+    /// @}
+
+    /// @name Module implementation
+    /// @{
+public:
+    /// @}
+
+    /// @name Inner Structures
+    /// @{
+public:
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    /// Custom Deleter for concrete I_Solution implementations that originate
+    /// from this module.
+    struct Deleter
+    {
+        void
+        operator()(I_Solution* _pSolution)
+        {
+            Solution* pSolution =
+                dynamic_cast<Solution*>(_pSolution);
+
+            if (pSolution != NULL)
+            {
+                delete pSolution;
+            }
+        }
+    };  // struct Deleter
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    /// @}
+
+    /// @name Static Methods
+    /// @{
+public:
+    static Module& instance();
+    /// @}
+
+    /// @name 'Structors
+    /// @{
+public:
+             Module();
+    virtual ~Module();
+    /// @}
+
+    /// @name Member Variables
+    /// @{
+private:
+    const std::string       m_name;
+    boost::filesystem::path m_path;
+    pSolution_type          m_pSolution;
+    /// @}
+
+};  // class Module
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+Module::Module()
+:   m_name("%SOLUTION_NAME%")
+,   m_path()
+,   m_pSolution(new Solution(this),Module::Deleter())
+{
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+Module::~Module()
+{
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+const std::string&
+Module::getName() const
+{
+    return m_name;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+Module::setPath(const boost::filesystem::path& _path)
+{
+    m_path = _path;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+const boost::filesystem::path&
+Module::getPath() const
+{
+    return m_path;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+Module::pSolution_type
+Module::getSolution()
+{
+    return m_pSolution;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+Module&
+Module::instance()
+{
+    static Module sm_module;
+
+    return sm_module;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+}   // namespace GCJFramework
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+extern "C"
+SOLUTION_DLL_LINK
+GCJFramework::I_Module&
+getModule()
+{
+    return GCJFramework::Module::instance();
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

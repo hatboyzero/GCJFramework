@@ -1,0 +1,53 @@
+# Generated file. Do not edit!!!
+cmake_minimum_required (VERSION 2.6)
+
+project (%SOLUTION_NAME%)
+set (PROJECT_PREFIX "Solutions/%CONTEST_NAME%/%SOLUTION_NAME%")
+
+if (NOT GCJ_PARENT)
+	find_path (GCJ_PARENT GCJFramework .. ../.. ../../.. ../../../.. ENV)
+endif (NOT GCJ_PARENT)
+
+set (CMAKE_MODULE_PATH 
+	"${GCJ_PARENT}/GCJFramework/CMake/Modules"
+	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_MODULE_PATH}
+)
+list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
+
+Find_Package (Boost REQUIRED serialization system filesystem)
+
+set (LIB_TYPE SHARED)
+
+set (Solution_SRC
+	src/Configuration.hpp
+	src/Module.hpp
+	src/Module.cpp
+	src/Solution.hpp
+	src/Solution.cpp
+	src/Solution_impl.cpp
+)
+
+set (Solution_DEFINITIONS ${GCJ_DEFINITIONS} -DSOLUTION_EXPORTS)
+add_definitions (${Solution_DEFINITIONS})
+
+include_directories (${GCJ_PARENT} ${Boost_INCLUDE_DIR})
+
+set (Solution_LINK_DIRECTORIES ${Boost_LIBRARY_DIRS})
+link_directories (${Solution_LINK_DIRECTORIES})
+
+add_library (%SOLUTION_NAME% ${LIB_TYPE} ${Solution_SRC})
+
+add_dependencies (%SOLUTION_NAME% GCJCore)
+
+set (Solution_LIBRARIES GCJCore ${Boost_LIBRARIES})
+target_link_libraries (%SOLUTION_NAME% ${Solution_LIBRARIES})
+
+set_target_properties (%SOLUTION_NAME% PROPERTIES DEBUG_POSTFIX "_d")
+
+install ( TARGETS
+	%SOLUTION_NAME%
+	RUNTIME DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/bin
+	LIBRARY DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/bin
+	ARCHIVE DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/bin
+)

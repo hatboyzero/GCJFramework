@@ -16,64 +16,22 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-// This file was automatically generated. Do not edit!!!
+// Generated solution stub -- this is where you will implement your solution.
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_SOLUTION_HPP_INCLUDED
-#define GCJFRAMEWORK_SOLUTION_HPP_INCLUDED
+#include "Solution.hpp"
 
-#include <GCJFramework/Core/I_Solution.hpp>
+#include <boost/cstdint.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-class I_Module;
-
-class Solution
-:   public I_Solution
+bool
+Solution::execute(std::istream& _inputStream, std::ostream& _outputStream) const
 {
-    /// @name Types
-    /// @{
-public:
-    /// @}
-
-    /// @name I_Solution implementation
-    /// @{
-public:
-    virtual const std::string& getName() const;
-    virtual bool validate() const;
-    virtual bool execute(const std::string& _type) const;
-    /// @}
-
-    /// @name Solution implementation
-    /// @{
-public:
-    void reset() const;
-    bool execute(std::istream& _inputStream, std::ostream& _outputStream) const;
-    std::istream& getInput(const std::string& _type) const;
-    std::istream& getValidationInput() const;
-    std::ostream& getOutput(const std::string& _type) const;
-    /// @}
-
-    /// @name 'Structors
-    /// @{
-public:
-             Solution(I_Module* _pModule);
-    virtual ~Solution();
-    /// @}
-
-    /// @name Member Variables
-    /// @{
-private:
-    I_Module*               m_pModule;
-    mutable std::istream*   m_pIs;
-    mutable std::ostream*   m_pOs;
-    /// @}
-
-};  // class Solution
+	/// TODO Implement solution here and return true if successful!
+	return false;
+}
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-#endif // GCJFRAMEWORK_SOLUTION_HPP_INCLUDED
