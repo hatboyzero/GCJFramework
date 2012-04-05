@@ -129,7 +129,7 @@ public:
     /// @name Static Methods
     /// @{
 public:
-    I_HTTPManager& getSingleton();
+    static I_HTTPManager& getSingleton();
     /// @}
 
     /// @name 'Structors

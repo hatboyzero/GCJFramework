@@ -1,6 +1,8 @@
 {
-    "user" : "matthew.alan.gray", 
+    "user" : "matthew.alan.gray@gmail.com", 
     "password" : "", 
+	"source" : "hatboystudios-GCJFramework-0.1.0"
+	"service" : "lh2"
     "contest" : "433101",
     "location": "@GCJ_PARENT@/GCJFramework/Solutions"
 }

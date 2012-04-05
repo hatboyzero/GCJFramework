@@ -36,8 +36,7 @@ public:
     /// @name I_GoogleLogin implementation
     /// @{
 public:
-    virtual pSession_type login(const std::string& _host,
-                                const std::string& _accountType,
+    virtual pSession_type login(const std::string& _accountType,
                                 const std::string& _user,
                                 const std::string& _password,
                                 const std::string& _service,

@@ -18,6 +18,8 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "GoogleLogin.hpp"
 
+#include "../I_HTTPManager.hpp"
+
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -32,14 +34,27 @@ GoogleLogin::~GoogleLogin()
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 GoogleLogin::pSession_type
-GoogleLogin::login(const std::string& _host,
-                   const std::string& _accountType,
+GoogleLogin::login(const std::string& _accountType,
                    const std::string& _user,
                    const std::string& _password,
                    const std::string& _service,
                    const std::string& _source,
                    bool _secure)
 {
+    std::string host("https://www.google.com");
+    std::string url("/accounts/ClientLogin");
+
+    I_HTTPManager::pRequest_type pRequest = 
+        I_HTTPManager::getSingleton().createRequest();
+
+    pRequest->setField("Email", _user);
+    pRequest->setField("Passwd", _password);
+    pRequest->setField("accountType", _accountType);
+    pRequest->setField("source", _source);
+    pRequest->setField("service", _service);
+
+    I_HTTPManager::pResponse_type pResponse = 
+        I_HTTPManager::getSingleton().get(host, url, pRequest);
     /// TODO Implement.
     throw std::exception("Not implemented.");
 }

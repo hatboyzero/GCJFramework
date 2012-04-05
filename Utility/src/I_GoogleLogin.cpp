@@ -17,6 +17,7 @@
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "../I_GoogleLogin.hpp"
+#include "GoogleLogin.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
@@ -28,6 +29,15 @@ I_GoogleLogin::I_GoogleLogin()
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 I_GoogleLogin::~I_GoogleLogin()
 {
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+I_GoogleLogin&
+I_GoogleLogin::getSingleton()
+{
+    static GoogleLogin sm_instance;
+
+    return sm_instance;
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

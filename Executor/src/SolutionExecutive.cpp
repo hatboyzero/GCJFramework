@@ -24,6 +24,8 @@
 #include <GCJFramework/Core/I_Contest.hpp>
 #include <GCJFramework/Core/I_Solution.hpp>
 
+#include <GCJFramework/Utility/I_GoogleLogin.hpp>
+
 #include <boost/log/trivial.hpp>
 
 #include <sstream>
@@ -86,6 +88,10 @@ SolutionExecutive::run()
         BOOST_LOG_TRIVIAL(error) << stream.str();
         return;
     }
+
+    std::string user = (*m_pEnvironment)["user"];
+    std::string password = (*m_pEnvironment)["password"];
+    I_GoogleLogin::getSingleton().login("GOOGLE", user, password, "lh2", "hatboystudios-GCJFramework-0.1.0", true);
 
     if (!m_pContestManager->loadContest(contestId))
     {

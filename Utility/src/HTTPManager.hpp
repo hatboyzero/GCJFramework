@@ -135,7 +135,8 @@ public:
         /// @name Response implementation
         /// @{
     public:
-        void parse(const std::string& _json);
+        void append(const std::string& _data);
+        void parse();
         /// @}
 
         /// @name 'Structors

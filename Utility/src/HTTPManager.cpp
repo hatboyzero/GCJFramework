@@ -88,7 +88,8 @@ HTTPManager::get(const std::string& _host,
     {
         Response* pRawResponse = new Response();
 
-        curl_easy_setopt(m_pCurlHandle, CURLOPT_URL, (_host + _url + "?" + _pRequest->toPayloadString()).c_str());
+        std::string encodedRequest = _pRequest->toPayloadString();
+        curl_easy_setopt(m_pCurlHandle, CURLOPT_URL, (_host + _url + "?" + encodedRequest).c_str());
         curl_easy_setopt(m_pCurlHandle, CURLOPT_HTTPGET, 1);
         curl_easy_setopt(m_pCurlHandle, CURLOPT_WRITEDATA, pRawResponse);
         CURLcode result = curl_easy_perform(m_pCurlHandle);
@@ -210,6 +211,7 @@ HTTPManager::init()
     pHeader = curl_slist_append(pHeader, "Accept-Charset: utf-8");
     curl_easy_setopt(m_pCurlHandle, CURLOPT_HTTPHEADER, pHeader);
     curl_easy_setopt(m_pCurlHandle, CURLOPT_HEADER, 1);
+    curl_easy_setopt(m_pCurlHandle, CURLOPT_CAINFO, "cacert.pem");
 
 }
 
@@ -232,8 +234,7 @@ HTTPManager::getResponse(void* _pData,
     Response* pResponse = static_cast<Response*>(_pUser);
 
     std::size_t size = _size * _nMemB;
-    std::string response((const char*)_pData, size);
-    pResponse->parse(response);
+    pResponse->append(std::string((const char*)_pData, size));
 
     return size;
 }
@@ -477,10 +478,16 @@ HTTPManager::Response::toString() const
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 void
-HTTPManager::Response::parse(const std::string& _json)
+HTTPManager::Response::append(const std::string& _data)
 {
-    m_response = _json;
-    if (m_document.Parse<0>(_json.c_str()).HasParseError())
+    m_response += _data;
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+HTTPManager::Response::parse()
+{
+    if (m_document.Parse<0>(m_response.c_str()).HasParseError())
     {
         BOOST_LOG_TRIVIAL(info) << "Response is not parsable JSON";
     }

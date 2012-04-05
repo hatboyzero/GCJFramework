@@ -42,8 +42,7 @@ public:
     /// @name GoogleLogin interface
     /// @{
 public:
-    virtual pSession_type login(const std::string& _host,
-                                const std::string& _accountType,
+    virtual pSession_type login(const std::string& _accountType,
                                 const std::string& _user,
                                 const std::string& _password,
                                 const std::string& _service,
@@ -51,6 +50,12 @@ public:
                                 bool _secure) = 0;
     virtual const boost::posix_time::ptime& getExpirationTime(const Session& _session) = 0;
     virtual bool hasExpired(const Session& _session) = 0;
+    /// @}
+
+    /// @name Static methods
+    /// @{
+public:
+    static I_GoogleLogin& getSingleton();
     /// @}
 
     /// @name 'Structors
