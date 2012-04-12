@@ -29,6 +29,7 @@ int
 main(int _argc, const char* _argv[])
 {
     bool validate;
+    std::string type, solution;
     std::string configPath;
     boost::program_options::variables_map variables;
 
@@ -70,6 +71,16 @@ main(int _argc, const char* _argv[])
             "Validate the solution before execution"
         )
         (
+            "type,t",
+            boost::program_options::value<std::string>(&type),
+            "Input type (small,large)"
+        )
+        (
+            "solution,s",
+            boost::program_options::value<std::string>(&solution),
+            "Solution name"
+        )
+        (
             "config,c", 
             boost::program_options::value<std::string>(&configPath)
                 ->default_value("config.json"), 
@@ -88,11 +99,12 @@ main(int _argc, const char* _argv[])
     
     boost::program_options::notify(variables);
 
-    if (variables.size() == 0 || variables.count("help") == 1)
+    if (variables.size() == 2 || variables.count("help") == 1)
     {
         std::stringstream stream;
         stream << std::endl << description << std::endl;
         std::cout << stream.str();
+        return 0;
     }
 
     boost::filesystem::path path = boost::filesystem::system_complete(
@@ -101,7 +113,7 @@ main(int _argc, const char* _argv[])
 
     GCJFramework::SolutionExecutive executive(path);
 
-    executive.run();
+    executive.run(solution, type, validate);
 
     return 0;
 }

@@ -116,6 +116,54 @@ ContestManager::loadContest(const std::string& _contestId)
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+bool
+ContestManager::generateContest(const std::string& _contestId)
+{
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    struct Deleter
+    {
+        void
+        operator()(I_Contest* _pContest)
+        {
+            Contest* pContest =
+                dynamic_cast<Contest*>(_pContest);
+
+            assert (pContest != NULL);
+
+            delete pContest;
+        }
+    };  // struct Deleter
+    //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+
+    std::stringstream stream;
+
+    boost::filesystem::path contestPath = boost::filesystem::system_complete(
+        m_path.string() + "/Contest-" + _contestId
+    ).normalize();
+
+    if (!boost::filesystem::exists(contestPath))
+    {
+        stream.str("");
+        stream << "Generating Contest-" << _contestId << "...";
+        BOOST_LOG_TRIVIAL(info) << stream.str();
+
+        if (!boost::filesystem::create_directory(contestPath))
+        {
+            //Templates_type templates = fetchTemplates();
+            //
+            //Templates_type::iterator iter = templates.begin();
+            //while (iter != templates.end())
+            //{
+            //    processTemplate(*iter, solution);
+            //    iter++;
+            //}
+        }
+    }
+
+    return loadContest(_contestId);
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ContestManager::pContest_type
 ContestManager::getContest(const std::string& _contestId) const
 {

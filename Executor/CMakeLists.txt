@@ -56,6 +56,12 @@ configure_file (
     @ONLY
 )
 
+install (FILES
+	"${CMAKE_BINARY_DIR}/Executor/config.json"
+	DESTINATION
+	"${CMAKE_INSTALL_PREFIX}/bin"
+)
+
 install ( TARGETS
 	GCJExecutor
 	RUNTIME DESTINATION ${GCJ_PARENT}/installs/GCJFramework/bin

@@ -24,8 +24,6 @@
 #include <GCJFramework/Core/I_Contest.hpp>
 #include <GCJFramework/Core/I_Solution.hpp>
 
-#include <GCJFramework/Utility/I_GoogleLogin.hpp>
-
 #include <boost/log/trivial.hpp>
 
 #include <sstream>
@@ -47,7 +45,9 @@ SolutionExecutive::~SolutionExecutive()
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 void
-SolutionExecutive::run()
+SolutionExecutive::run(const std::string& _solution, 
+                       const std::string& _type, 
+                       bool _validate)
 {
     if (!boost::filesystem::exists(m_configPath))
     {
@@ -89,10 +89,6 @@ SolutionExecutive::run()
         return;
     }
 
-    std::string user = (*m_pEnvironment)["user"];
-    std::string password = (*m_pEnvironment)["password"];
-    I_GoogleLogin::getSingleton().login("GOOGLE", user, password, "lh2", "hatboystudios-GCJFramework-0.1.0", true);
-
     if (!m_pContestManager->loadContest(contestId))
     {
         return;
@@ -106,7 +102,28 @@ SolutionExecutive::run()
         return;
     }
 
-    validate(pContest);
+    if (_validate && pContest->getSolution(_solution)->validate())
+    {
+        if (pContest->getSolution(_solution)->execute(_type))
+        {
+            std::stringstream stream;
+            stream << "Solution " << _solution << " executed successfully -- "
+                   << "(" << _type << ") input ready for submission.";
+            BOOST_LOG_TRIVIAL(info) << stream.str();
+        }
+        else
+        {
+            std::stringstream stream;
+            stream << "Solution " << _solution << " failed execution!!!";
+            BOOST_LOG_TRIVIAL(info) << stream.str();
+        }
+    }
+    else
+    {
+        std::stringstream stream;
+        stream << "Solution " << _solution << " could not be validated!!!";
+        BOOST_LOG_TRIVIAL(warning) << stream.str();
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

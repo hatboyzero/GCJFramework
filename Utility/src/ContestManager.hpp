@@ -39,6 +39,7 @@ class ContestManager
 public:
     virtual bool setLocation(const boost::filesystem::path& _location);
     virtual bool loadContest(const std::string& _contestId);
+    virtual bool generateContest(const std::string& _contestId);
     virtual pContest_type getContest(const std::string& _contestId) const;
     virtual void getContests(I_ContestVisitor& _visitor) const;
     /// @}

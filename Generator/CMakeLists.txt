@@ -16,7 +16,11 @@ Find_Package (CURL REQUIRED)
 Find_Package (RapidJSON REQUIRED)
 
 set (GCJGenerator_SRC
+    src/ContestGenerator.cpp
+    src/ContestGenerator.hpp
     src/main.cpp
+    src/SolutionGenerator.cpp
+    src/SolutionGenerator.hpp
 )
 
 set (GCJGenerator_DEFINITIONS ${GCJ_DEFINITIONS})

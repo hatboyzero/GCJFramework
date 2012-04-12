@@ -16,56 +16,41 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
-#define GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
-
-#include <GCJFramework/Utility/I_Environment.hpp>
-#include <GCJFramework/Utility/I_ContestManager.hpp>
-
-#include <boost/filesystem.hpp>
-#include <boost/shared_ptr.hpp>
+#ifndef GCJFRAMEWORK_SOLUTION_GENERATOR_HPP_INCLUDED
+#define GCJFRAMEWORK_SOLUTION_GENERATOR_HPP_INCLUDED
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-class I_Contest;
-
-class SolutionExecutive
+class SolutionGenerator
 {
     /// @name Types
     /// @{
 public:
-    typedef boost::shared_ptr<I_Contest>    pContest_type;
     /// @}
 
-    /// @name SolutionExecutive implementation
+    /// @name SolutionGenerator implementation
     /// @{
 public:
-    void run(const std::string& _solution, const std::string& _type, bool _validate);
-private:
-    void validate(pContest_type _pContest);
     /// @}
 
     /// @name 'Structors
     /// @{
 public:
-     SolutionExecutive(const boost::filesystem::path& _configPath);
-    ~SolutionExecutive();
+     SolutionGenerator();
+    ~SolutionGenerator();
     /// @}
-    
+
     /// @name Member Variables
     /// @{
 private:
-    boost::filesystem::path                 m_configPath;
-    I_Environment::pEnvironment_type        m_pEnvironment;
-    I_ContestManager::pContestManager_type  m_pContestManager;
     /// @}
 
-};  // class SolutionExecutive
+};  // class SolutionGenerator
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-#endif // GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
+#endif // GCJFRAMEWORK_SOLUTION_GENERATOR_HPP_INCLUDED

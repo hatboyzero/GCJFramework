@@ -16,56 +16,20 @@
 //
 //  @author Matthew Alan Gray <mgray@hatboystudios.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
-#define GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED
-
-#include <GCJFramework/Utility/I_Environment.hpp>
-#include <GCJFramework/Utility/I_ContestManager.hpp>
-
-#include <boost/filesystem.hpp>
-#include <boost/shared_ptr.hpp>
+#include "SolutionGenerator.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-class I_Contest;
-
-class SolutionExecutive
+SolutionGenerator::SolutionGenerator()
 {
-    /// @name Types
-    /// @{
-public:
-    typedef boost::shared_ptr<I_Contest>    pContest_type;
-    /// @}
+}
 
-    /// @name SolutionExecutive implementation
-    /// @{
-public:
-    void run(const std::string& _solution, const std::string& _type, bool _validate);
-private:
-    void validate(pContest_type _pContest);
-    /// @}
-
-    /// @name 'Structors
-    /// @{
-public:
-     SolutionExecutive(const boost::filesystem::path& _configPath);
-    ~SolutionExecutive();
-    /// @}
-    
-    /// @name Member Variables
-    /// @{
-private:
-    boost::filesystem::path                 m_configPath;
-    I_Environment::pEnvironment_type        m_pEnvironment;
-    I_ContestManager::pContestManager_type  m_pContestManager;
-    /// @}
-
-};  // class SolutionExecutive
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+SolutionGenerator::~SolutionGenerator()
+{
+}
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 }   // namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-#endif // GCJFRAMEWORK_SOLUTION_EXECUTIVE_HPP_INCLUDED

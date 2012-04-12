@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
+project (%CONTEST_NAME%)
+
 if (NOT GCJ_PARENT)
 	find_path (GCJ_PARENT GCJFramework .. ${CMAKE_CURRENT_SOURCE_DIR}/../.. ../.. ../../.. ENV)
 endif (NOT GCJ_PARENT)

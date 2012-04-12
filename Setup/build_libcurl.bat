@@ -26,8 +26,8 @@ nmake /f Makefile.vc MODE=dll VC=10 WITH_DEVEL=%ZLIB_INSTALL% WITH_ZLIB=dll WITH
 
 xcopy %LIBCURL_SRC%\builds\libcurl-release-dll-ssl-dll-zlib--ipv6-sspi\* %LIBCURL_INSTALL% /E /C /I /Q /R /Y
 cd %LIBCURL_BIN%
+if exist cacert.pem del cacert.pem
 %WGET% http://curl.haxx.se/ca/cacert.pem
-rename cacert.pem curl-ca-bundle.crt
 
 cd %WORKING_DIR%
 

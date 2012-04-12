@@ -131,14 +131,23 @@ Solution::getInput(const std::string& _type) const
             delete m_pIs;
         }
 
-        m_pIs = new std::ifstream(inputPath.string());
-        return *m_pIs;
+        try
+        {
+            m_pIs = new std::ifstream(inputPath.string());
+            return *m_pIs;
+        }
+        catch (std::exception& _e)
+        {
+            std::stringstream stream;
+            stream << "Input stream could not be created! --" << _e.what();
+            BOOST_LOG_TRIVIAL(error) << stream.str();
+            throw std::exception(stream.str().c_str());
+        }
     }
 
     std::stringstream stream;
     stream << "Input stream does not exist!";
     BOOST_LOG_TRIVIAL(error) << stream.str();
-    throw std::exception(stream.str().c_str());
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
