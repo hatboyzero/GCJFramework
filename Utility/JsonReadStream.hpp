@@ -16,20 +16,85 @@
 //
 //  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "../I_Module.hpp"
+#ifndef GCJFRAMEWORK_UTILITY_JSONREADSTREAM_HPP_INCLUDED
+#define GCJFRAMEWORK_UTILITY_JSONREADSTREAM_HPP_INCLUDED
+
+#include <rapidjson/rapidjson.h>
+#include <iostream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
+namespace Utility {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_Module::I_Module()
-{
-}
+
+class JsonReadStream {
+
+	/// @name Types
+	/// @{
+public:
+	/// @}
+
+	/// @name JsonReadStream implementation
+	/// @{
+public:
+	char Peek() const 
+	{
+		return static_cast<char>(is_.peek());
+	}
+
+	char Take() const 
+	{
+		return static_cast<char>(is_.get());
+	}
+
+	size_t Tell() const 
+	{
+		return (int)is_.tellg();
+	}
+
+	void Put(char c) 
+	{ 
+		RAPIDJSON_ASSERT(false); 
+	}
+
+	void Flush() 
+	{ 
+		RAPIDJSON_ASSERT(false); 
+	}
+
+	char* PutBegin() 
+	{ 
+		RAPIDJSON_ASSERT(false); 
+		return 0; 
+	}
+
+	size_t PutEnd(char*) 
+	{ 
+		RAPIDJSON_ASSERT(false); 
+		return 0; 
+	}
+	/// @}
+
+	/// @name 'Structors
+	/// @{
+public:
+	JsonReadStream(std::istream& is) 
+	: is_(is) 
+	{
+	}
+	/// @}
+
+	/// @name Member Variables
+	/// @{
+private:
+	std::istream& is_;
+	/// @}
+
+};	// class JsonReadStream
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_Module::~I_Module()
-{
-}
+}	// namespace Utility
+}	// namespace GCJFramework
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace GCJFramework
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+#endif // GCJFRAMEWORK_UTILITY_JSONREADSTREAM_HPP_INCLUDED

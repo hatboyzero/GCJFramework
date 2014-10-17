@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Google Code Jam Solution Framework
 //
-// Copyright (C) 2012 Matthew Alan Gray
+// Copyright (C) 2012-2014 Matthew Alan Gray
 //
 //  This software is licensed as described in the file license.txt, which you
 //  should have received as part of this distribution.
@@ -14,12 +14,15 @@
 //  including commercial applications, and to alter it and redistribute it
 //  freely, subject to the terms described in the file license.txt.
 //
-//  @author Matthew Alan Gray <mgray@hatboystudios.com>
+//  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "SolutionExecutive.hpp"
 
-#include <boost/filesystem.hpp>
-#include <boost/program_options.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/parsers.hpp>
+#include <boost/program_options/variables_map.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -36,7 +39,7 @@ main(int _argc, const char* _argv[])
     boost::program_options::options_description description(
         "Google Code Jam Solution Framework\n"
         "\n"
-        "Copyright (C) 2012 Matthew Alan Gray\n"
+        "Copyright (C) 2012-2014 Matthew Alan Gray\n"
         "\n"
         "  This software is provided 'as-is', without any express or implied\n"
         "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -54,7 +57,7 @@ main(int _argc, const char* _argv[])
         "     misrepresented as being the original software.\n"
         "  3. This notice may not be removed or altered from any source distribution.\n"
         "\n"
-        "  @author Matthew Alan Gray <mgray@hatboystudios.com>\n"
+        "  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>\n"
         "\n"
         "Allowed options:"
     );

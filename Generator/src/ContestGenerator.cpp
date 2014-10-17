@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Google Code Jam Solution Framework
 //
-// Copyright (C) 2012 Matthew Alan Gray
+// Copyright (C) 2012-2014 Matthew Alan Gray
 //
 //  This software is licensed as described in the file license.txt, which you
 //  should have received as part of this distribution.
@@ -14,10 +14,11 @@
 //  including commercial applications, and to alter it and redistribute it
 //  freely, subject to the terms described in the file license.txt.
 //
-//  @author Matthew Alan Gray <mgray@hatboystudios.com>
+//  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "ContestGenerator.hpp"
 
+#include <boost/filesystem/operations.hpp>
 #include <boost/log/trivial.hpp>
 
 #include <sstream>
@@ -74,7 +75,7 @@ ContestGenerator::generate(const std::string& _contestId)
 
     if (!m_pContestManager->loadContest(_contestId))
     {
-        m_pContestManager->generateContest(_contestId);
+        //m_pContestManager->generateContest(_contestId);
     }
 }
 

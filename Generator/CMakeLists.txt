@@ -32,10 +32,10 @@ link_directories (${Boost_LIBRARY_DIRS})
 
 add_executable (GCJGenerator ${GCJGenerator_SRC})
 
-add_dependencies (GCJGenerator GCJCore)
+add_dependencies (GCJGenerator GCJUtility GCJCore)
 
 set (GCJGenerator_LIBRARIES GCJCore ${Boost_LIBRARIES} ${ZLIB_LIBRARIES} ${CURL_LIBRARIES})
-target_link_libraries (GCJGenerator ${GCJGenerator_LIBRARIES})
+target_link_libraries (GCJGenerator GCJCore GCJUtility ${GCJGenerator_LIBRARIES})
 
 set_target_properties (GCJGenerator PROPERTIES DEBUG_POSTFIX "_d")
 

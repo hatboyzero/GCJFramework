@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Google Code Jam Solution Framework
 //
-// Copyright (C) 2012 Matthew Alan Gray
+// Copyright (C) 2012-2014 Matthew Alan Gray
 //
 //  This software is licensed as described in the file license.txt, which you
 //  should have received as part of this distribution.
@@ -14,14 +14,16 @@
 //  including commercial applications, and to alter it and redistribute it
 //  freely, subject to the terms described in the file license.txt.
 //
-//  @author Matthew Alan Gray <mgray@hatboystudios.com>
+//  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "Environment.hpp"
 
-#include <rapidjson/prettywriter.h>
-#include <rapidjson/genericreadstream.h>
-#include <rapidjson/genericwritestream.h>
+#include "../JsonReadStream.hpp"
+#include "../JsonWriteStream.hpp"
 
+#include <rapidjson/prettywriter.h>
+
+#include <boost/filesystem/operations.hpp>
 #include <boost/log/trivial.hpp>
 
 #include <fstream>
@@ -129,8 +131,8 @@ Environment::saveSessionInfo(const boost::filesystem::path& _path)
 bool
 Environment::saveSessionInfo(std::ostream& _output)
 {
-    rapidjson::GenericWriteStream jsonGfs(_output);
-    rapidjson::PrettyWriter<rapidjson::GenericWriteStream> writer(jsonGfs);
+    Utility::JsonWriteStream jsonGfs(_output);
+    rapidjson::PrettyWriter<Utility::JsonWriteStream> writer(jsonGfs);
     m_sessionInfo.Accept(writer);
     return true;
 }

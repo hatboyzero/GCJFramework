@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Google Code Jam Solution Framework
 //
-// Copyright (C) 2012 Matthew Alan Gray
+// Copyright (C) 2012-2014 Matthew Alan Gray
 //
 //  This software is licensed as described in the file license.txt, which you
 //  should have received as part of this distribution.
@@ -14,12 +14,13 @@
 //  including commercial applications, and to alter it and redistribute it
 //  freely, subject to the terms described in the file license.txt.
 //
-//  @author Matthew Alan Gray <mgray@hatboystudios.com>
+//  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "HTTPManager.hpp"
 
+#include "../JsonWriteStream.hpp"
+
 #include <rapidjson/writer.h>
-#include <rapidjson/genericwritestream.h>
 
 #include <boost/log/trivial.hpp>
 #include <boost/thread/locks.hpp>
@@ -380,14 +381,14 @@ HTTPManager::Request::toJSONString() const
 
         virtual void visit(const std::string& _key, const std::string& _value)
         {
-            m_document[_key.c_str()].SetString(_value.c_str());
+			m_document[_key.c_str()].SetString(_value.c_str(), _value.length(), m_document.GetAllocator());
         }
 
         virtual void end()
         {
             std::stringstream stream;
-            rapidjson::GenericWriteStream jsonGss(stream);
-            rapidjson::Writer<rapidjson::GenericWriteStream> writer(jsonGss);
+            Utility::JsonWriteStream jsonGss(stream);
+            rapidjson::Writer<Utility::JsonWriteStream> writer(jsonGss);
             m_document.Accept(writer);
             m_json = stream.str();
         }

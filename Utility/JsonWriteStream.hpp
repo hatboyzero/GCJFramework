@@ -16,31 +16,98 @@
 //
 //  @author Matthew Alan Gray <matthew.alan.gray@gmail.com>
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#include "../I_ModuleManager.hpp"
-#include "ModuleManager.hpp"
+#ifndef GCJFRAMEWORK_UTILITY_JSONWRITESTREAM_HPP_INCLUDED
+#define GCJFRAMEWORK_UTILITY_JSONWRITESTREAM_HPP_INCLUDED
+
+#include <rapidjson/rapidjson.h>
+#include <iostream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace GCJFramework {
+namespace Utility {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_ModuleManager::I_ModuleManager()
-{
-}
+
+class JsonWriteStream {
+
+	/// @name Types
+	/// @{
+public:
+	/// @}
+
+	/// @name JsonWriteStream implementation
+	/// @{
+public:
+	void Put(char c) {
+		os_.put(c);
+	}
+
+	void PutN(char c, size_t n) {
+		for (size_t i = 0; i < n; ++i)
+		{
+			Put(c);
+		}
+	}
+
+	void Flush() {
+		os_.flush();
+	}
+
+	size_t Tell() const {
+		return (int)os_.tellp();
+	}
+
+	char Peek() const
+	{
+		RAPIDJSON_ASSERT(false);
+	}
+
+	char Take()
+	{
+		RAPIDJSON_ASSERT(false);
+	}
+
+	char* PutBegin() 
+	{
+		RAPIDJSON_ASSERT(false);
+		return 0;
+	}
+
+	size_t PutEnd(char*)
+	{
+		RAPIDJSON_ASSERT(false);
+		return 0;
+	}
+	/// @}
+
+	/// @name 'Structors
+	/// @{
+public:
+	JsonWriteStream(std::ostream& os)
+	:	os_(os)
+	{
+	}
+	/// @}
+
+	/// @name Member Variables
+	/// @{
+private:
+	std::ostream& os_;
+	/// @}
+
+};	// class JsonWriteStream
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_ModuleManager::~I_ModuleManager()
-{
-}
-
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-static ModuleManager sm_ModuleManager;
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-I_ModuleManager&
-I_ModuleManager::getSingleton()
-{
-	return sm_ModuleManager;
-}
-
-//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+}	// namespace Utility
 }	// namespace GCJFramework
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+namespace rapidjson {
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+template<>
+inline void PutN(GCJFramework::Utility::JsonWriteStream& stream, char c, size_t n) {
+	stream.PutN(c, n);
+}
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+}	// namespace rapidjson
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
+#endif	// GCJFRAMEWORK_UTILITY_JSONWRITESTREAM_HPP_INCLUDED
