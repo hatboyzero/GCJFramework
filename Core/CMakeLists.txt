@@ -10,8 +10,6 @@ endif (NOT GCJ_PARENT)
 set (CMAKE_MODULE_PATH "${GCJ_PARENT}/GCJFramework/CMake/Modules" ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
 
-Find_Package(Boost REQUIRED serialization system filesystem)
-
 SET (LIB_TYPE SHARED)
 
 set (GCJCore_SRC
@@ -39,13 +37,11 @@ set (GCJCore_SRC
 set (GCJCore_DEFINITIONS -DGCJCORE_EXPORTS ${GCJ_DEFINITIONS})
 add_definitions (${GCJCore_DEFINITIONS})
 
-include_directories (${Boost_INCLUDE_DIR})
-
-link_directories (${Boost_LIBRARY_DIRS})
+include_directories (${BoostSourceDir})
 
 add_library (GCJCore ${LIB_TYPE} ${GCJCore_SRC})
 
-target_link_libraries (GCJCore ${Boost_LIBRARIES})
+target_link_libraries (GCJCore BoostSerialization BoostSystem BoostFilesystem BoostThread BoostDateTime BoostChrono BoostLog)
 
 set_target_properties (GCJCore PROPERTIES DEBUG_POSTFIX "_d")
 

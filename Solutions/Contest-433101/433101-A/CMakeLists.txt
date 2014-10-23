@@ -14,8 +14,6 @@ set (CMAKE_MODULE_PATH
 )
 list (REMOVE_DUPLICATES CMAKE_MODULE_PATH)
 
-Find_Package (Boost REQUIRED serialization system filesystem)
-
 set (LIB_TYPE SHARED)
 
 set (Solution_SRC
@@ -30,16 +28,13 @@ set (Solution_SRC
 set (Solution_DEFINITIONS ${GCJ_DEFINITIONS} -DSOLUTION_EXPORTS)
 add_definitions (${Solution_DEFINITIONS})
 
-include_directories (${GCJ_PARENT} ${Boost_INCLUDE_DIR})
-
-set (Solution_LINK_DIRECTORIES ${Boost_LIBRARY_DIRS})
-link_directories (${Solution_LINK_DIRECTORIES})
+include_directories (${GCJ_PARENT} ${BoostSourceDir})
 
 add_library (433101-A ${LIB_TYPE} ${Solution_SRC})
 
 add_dependencies (433101-A GCJCore)
 
-set (Solution_LIBRARIES GCJCore ${Boost_LIBRARIES})
+set (Solution_LIBRARIES GCJCore BoostSerialization BoostSystem BoostFilesystem)
 target_link_libraries (433101-A ${Solution_LIBRARIES})
 
 set_target_properties (433101-A PROPERTIES DEBUG_POSTFIX "_d")
